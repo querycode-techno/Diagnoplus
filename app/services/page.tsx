@@ -8,7 +8,7 @@ import Image from "next/image"
 export default function ServicesPage() {
   const serviceCategories = [
     {
-      icon: "/icons/diagnostics.png",
+      icon: "/icons/Diagnostics.png",
       title: "Diagnostics",
       items: ["Pathology Lab Tests", "Preventive Health Check-up Packages"],
     },
