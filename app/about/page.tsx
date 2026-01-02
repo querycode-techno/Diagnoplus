@@ -220,7 +220,7 @@ function VisionMissionCarousel() {
           <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[600px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
             <div className="absolute inset-0">
               <Image
-                src="/about/vision.png"
+                src="/about/Vision.png"
                 alt="Our Vision"
                 fill
                 className="object-contain transition-transform duration-500 group-hover:scale-105"
