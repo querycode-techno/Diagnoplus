@@ -1,79 +1,549 @@
+"use client"
+
+import React, { useRef, useState, useEffect } from "react"
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 import PartnerForm from "@/components/partner-form"
 import { Button } from "@/components/ui/button"
+import { Stethoscope, Building2, TestTube, Users, Heart, Activity, Award, TrendingUp, CheckCircle2, MapPin, Calendar, Phone, Briefcase, ArrowRight, Plus, Pill, Syringe, BriefcaseMedical, Droplet, Bandage, ChevronLeft, ChevronRight, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+
+function ScrollableContainer({ 
+  children, 
+  onScrollRef,
+  onActiveIndexChange 
+}: { 
+  children: React.ReactNode
+  onScrollRef?: (scrollLeft: () => void, scrollRight: () => void, scrollToIndex: (index: number) => void) => void
+  onActiveIndexChange?: (index: number) => void
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const totalCards = Array.isArray(children) ? children.length : React.Children.count(children)
+
+  const scrollToIndex = (index: number) => {
+    if (!scrollRef.current) return
+    const cards = scrollRef.current.querySelectorAll('div[data-card-index]')
+    const targetCard = cards[index] as HTMLElement
+    if (targetCard) {
+      targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+  }
+
+  const scrollLeftFn = () => {
+    if (!scrollRef.current) return
+    const newIndex = Math.max(0, activeIndex - 1)
+    scrollToIndex(newIndex)
+  }
+
+  const scrollRightFn = () => {
+    if (!scrollRef.current) return
+    const newIndex = Math.min(totalCards - 1, activeIndex + 1)
+    scrollToIndex(newIndex)
+  }
+
+  useEffect(() => {
+    if (onScrollRef) {
+      onScrollRef(scrollLeftFn, scrollRightFn, scrollToIndex)
+    }
+  }, [activeIndex, totalCards, onScrollRef])
+
+  useEffect(() => {
+    if (onActiveIndexChange) {
+      onActiveIndexChange(activeIndex)
+    }
+  }, [activeIndex, onActiveIndexChange])
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return
+    const container = scrollRef.current
+    const cards = container.querySelectorAll('div[data-card-index]')
+    
+    let closestIndex = 0
+    let closestDistance = Infinity
+    
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect()
+      const containerRect = container.getBoundingClientRect()
+      const distance = Math.abs(rect.left - containerRect.left)
+      
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestIndex = index
+      }
+    })
+    
+    setActiveIndex(closestIndex)
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return
+    // Only start dragging on left mouse button
+    if (e.button !== 0) return
+    
+    setIsDragging(true)
+    const rect = scrollRef.current.getBoundingClientRect()
+    setStartX(e.clientX - rect.left)
+    setScrollLeft(scrollRef.current.scrollLeft)
+    scrollRef.current.style.cursor = 'grabbing'
+    scrollRef.current.style.userSelect = 'none'
+    e.preventDefault()
+  }
+
+  const handleMouseLeave = () => {
+    setIsDragging(false)
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab'
+      scrollRef.current.style.userSelect = 'auto'
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+    if (scrollRef.current) {
+      scrollRef.current.style.cursor = 'grab'
+      scrollRef.current.style.userSelect = 'auto'
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return
+    e.preventDefault()
+    const rect = scrollRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const walk = (x - startX) * 2 // Scroll speed multiplier
+    scrollRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  return (
+    <div
+      ref={scrollRef}
+      className="flex gap-6 lg:gap-8 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory cursor-grab select-none"
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      onScroll={handleScroll}
+      style={{ WebkitUserSelect: 'none', userSelect: 'none' }}
+    >
+      {React.Children.map(children, (child, index) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child as React.ReactElement<any>, {
+            'data-card-index': index
+          })
+        }
+        return child
+      })}
+    </div>
+  )
+}
+
+function ImageModal({ image, isOpen, onClose }: { image: string | null; isOpen: boolean; onClose: () => void }) {
+  if (!isOpen || !image) return null
+
+  return (
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+        aria-label="Close"
+      >
+        <X className="w-8 h-8" />
+      </button>
+      <div className="relative max-w-7xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+        <Image
+          src={image}
+          alt="Gallery image"
+          fill
+          className="object-contain"
+          priority
+        />
+      </div>
+    </div>
+  )
+}
+
+function Gallery({ images }: { images: string[] }) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+
+  return (
+    <>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+        {images.map((image, idx) => (
+          <div
+            key={idx}
+            className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group hover:scale-105 transition-transform duration-300"
+            onClick={() => setSelectedImage(image)}
+          >
+            <Image
+              src={image}
+              alt={`Gallery image ${idx + 1}`}
+              fill
+              className="object-cover group-hover:brightness-110 transition-all duration-300"
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
+          </div>
+        ))}
+      </div>
+      <ImageModal image={selectedImage} isOpen={!!selectedImage} onClose={() => setSelectedImage(null)} />
+    </>
+  )
+}
+
+function VisionMissionCarousel() {
+  const scrollFunctionsRef = useRef<{ 
+    scrollLeft: () => void
+    scrollRight: () => void
+    scrollToIndex: (index: number) => void
+  } | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const totalCards = 2 // Vision and Mission
+
+  return (
+    <>
+      <div className="relative">
+        <ScrollableContainer
+          onScrollRef={(scrollLeft, scrollRight, scrollToIndex) => {
+            scrollFunctionsRef.current = { scrollLeft, scrollRight, scrollToIndex }
+          }}
+          onActiveIndexChange={(index) => setActiveIndex(index)}
+        >
+          {/* Vision Card */}
+          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[600px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
+            <div className="absolute inset-0">
+              <Image
+                src="/about/vision.png"
+                alt="Our Vision"
+                fill
+                className="object-contain transition-transform duration-500 group-hover:scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-500"></div>
+            </div>
+            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 text-white z-10">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4">Our Vision</h2>
+                <p className="text-xl md:text-2xl font-semibold text-white mb-6">
+                  To make quality healthcare accessible to every Indian.
+                </p>
+                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-4">
+                  In India, we have seen a painful reality—good health insurance and quality healthcare are still too
+                  expensive for many people. For countless middle-class families, falling sick does not only affect health,
+                  it also creates fear of heavy medical expenses. Healthcare, which should be a basic right, often turns into
+                  a financial struggle.
+                </p>
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  This reality gave birth to Diagnoplus Health Services. Our vision is clear and heartfelt—to make healthcare
+                  easy, affordable, and accessible for every middle-class Indian family. We want people to focus on recovery
+                  and well-being, not on bills and stress.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mission Card */}
+          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[600px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
+            <div className="absolute inset-0">
+              <Image
+                src="/about/missionn.webp"
+                alt="Our Mission"
+                fill
+                className="object-contain transition-transform duration-500 group-hover:scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-500"></div>
+            </div>
+            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 text-white z-10">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4">Our Mission</h2>
+                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-4">
+                  Our mission is to make healthcare simple, affordable, and stress-free for every family. We want to stand
+                  with patients and their loved ones during difficult times, guiding them at every step—from diagnosis to
+                  treatment and recovery.
+                </p>
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  By bringing trusted doctors, hospitals, diagnostics, and support services onto one platform, we help families
+                  save time, money, and worry. At Diagnoplus Health Services, our goal is to ensure that no one feels alone or
+                  helpless when it comes to their health, and that quality care is always within reach.
+                </p>
+              </div>
+            </div>
+          </div>
+        </ScrollableContainer>
+
+        {/* Navigation Buttons - Positioned on sides */}
+        <button
+          onClick={() => scrollFunctionsRef.current?.scrollLeft()}
+          disabled={activeIndex === 0}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => scrollFunctionsRef.current?.scrollRight()}
+          disabled={activeIndex === totalCards - 1}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center items-center gap-2 mt-6">
+          {Array.from({ length: totalCards }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollFunctionsRef.current?.scrollToIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                activeIndex === index
+                  ? 'bg-[#7AB735] w-8'
+                  : 'bg-[#393185]/30 hover:bg-[#393185]/50'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-primary/5 to-secondary/5">
+      {/* Hero Banner Section - Cloned Design */}
+      {/* Hero Banner Section - Cloned Design */}
+      <section className="relative min-h-[600px] md:min-h-[700px] overflow-hidden">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(/about/dgp3.webp)",
+            backgroundPosition: "right center",
+            backgroundSize: "cover",
+            backgroundAttachment: "fixed",
+          }}
+        >
+          <div className="absolute inset-0 bg-white/40"></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 flex items-center min-h-[600px] md:min-h-[700px] px-4 sm:px-6 lg:px-8 md:px-16">
+          <div className="w-full max-w-7xl mx-auto">
+            <div className="flex items-center">
+              {/* Left Side - Gradient Text Box (Stretchable) */}
+              <div className="flex-1 max-w-2xl lg:max-w-3xl relative z-20">
+                <div className="bg-linear-to-r from-blue-500 via-purple-500 to-red-500 rounded-3xl p-8 md:p-10 lg:p-12 xl:p-16 shadow-2xl text-white">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4">
+                    India's Largest Digital Healthcare Platform
+                  </h1>
+                  <p className="text-lg md:text-xl lg:text-2xl opacity-95 leading-relaxed">
+                    Giving customers 24x7 access to high-quality healthcare.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* We Are Diagnoplus Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 text-balance">About Diagnoplus Health Services</h1>
-          <p className="text-lg text-foreground/70 max-w-2xl">
-            Making quality healthcare simple, affordable, and accessible for every family
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#A92881] mb-6 leading-tight">
+                WE ARE DIAGNOPLUS<br />AN END-TO-END<br />DIGITAL HEALTHCARE PLATFORM
+              </h2>
+              <p className="text-lg text-foreground/70 leading-relaxed mb-4">
+                Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
+                services simpler, faster, and more affordable across India. By combining technology with a trusted
+                healthcare network, we provide end-to-end support for patients and families.
+              </p>
+              <p className="text-lg text-foreground/70 leading-relaxed">
+                Our comprehensive services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
+                and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
+                services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
+                and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
+                sections of society.
+              </p>
+            </div>
+            <div className="relative">
+              {/* Floating Mobile Phone Effect */}
+              <div className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center">
+                <div 
+                  className="relative w-64 h-[500px] md:w-80 md:h-[600px] lg:w-96 lg:h-[700px]"
+                  style={{
+                    animation: 'float 3s ease-in-out infinite'
+                  }}
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src="/about/mobile.png"
+                      alt="Mobile app interface"
+                      fill
+                      className="object-contain drop-shadow-2xl"
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* We Put The Care In Healthcare Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185]/5 via-white to-[#7AB735]/5">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-16">
+            WE PUT THE CARE IN HEALTHCARE
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8">
+            {[
+              { image: "/about/online.webp", title: "Online Consultation" },
+              { image: "/about/offline.webp", title: "Offline Consultation" },
+              { image: "/about/inpatients.webp", title: "In-patient Services" },
+              { image: "/about/homecare.webp", title: "Homecare" },
+              { image: "/about/labtest.webp", title: "Lab Tests" },
+              { image: "/about/surgery.webp", title: "Surgery Care" },
+            ].map((service, idx) => (
+              <div key={idx} className="flex flex-col items-center text-center group">
+                <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mb-4 rounded-xl overflow-hidden shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-sm md:text-base font-semibold text-[#A92881] leading-tight">{service.title}</h3>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* About Us Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-12 text-balance">About Us</h2>
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg text-foreground/70 leading-relaxed mb-6">
-              Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
-              services simpler, faster, and more affordable across Central India. By combining technology with a trusted
-              healthcare network, we provide end-to-end support for patients and families.
-            </p>
-            <p className="text-lg text-foreground/70 leading-relaxed">
-              Our services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
-              and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
-              services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
-              and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
-              sections of society.
-            </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#A92881] mb-12 text-balance">About Us</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Side - Image */}
+            <div className="relative">
+              <div className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-xl">
+                <Image
+                  src="/about/dgp1.webp"
+                  alt="Diagnoplus Healthcare Services"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Right Side - Text Content */}
+            <div>
+              <p className="text-lg text-foreground/70 leading-relaxed mb-6">
+                Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
+                services simpler, faster, and more affordable across Central India. By combining technology with a trusted
+                healthcare network, we provide end-to-end support for patients and families.
+              </p>
+              <p className="text-lg text-foreground/70 leading-relaxed">
+                Our services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
+                and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
+                services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
+                and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
+                sections of society.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-3xl font-bold text-primary mb-6">Our Vision</h2>
-            <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-              In India, we have seen a painful reality—good health insurance and quality healthcare are still too
-              expensive for many people. For countless middle-class families, falling sick does not only affect health,
-              it also creates fear of heavy medical expenses. Healthcare, which should be a basic right, often turns into
-              a financial struggle.
-            </p>
-            <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-              This reality gave birth to Diagnoplus Health Services. Our vision is clear and heartfelt—to make healthcare
-              easy, affordable, and accessible for every middle-class Indian family. We want people to focus on recovery
-              and well-being, not on bills and stress.
-            </p>
-            <p className="text-lg text-foreground/70 leading-relaxed">
-              We believe no family should compromise their future because of medical costs. Through simple processes,
-              trusted services, and fair pricing, Diagnoplus Health Services aims to protect both health and peace of
-              mind—today and for years to come.
-            </p>
+      {/* Equipped With A Plan And A Purpose - Vision Section */}
+      {/* Vision & Mission Section with Images */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#393185]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#7AB735]/5 rounded-full blur-3xl"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <VisionMissionCarousel />
+        </div>
+      </section>
+
+      {/* Powered By Partnerships Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-16">
+            POWERED BY PARTNERSHIPS
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            {[
+              { icon: Users, title: "Doctors", count: "5,000+", desc: "Doctors across 20+ specialities" },
+              { icon: Building2, title: "Hospitals", count: "500+", desc: "Hospitals now available" },
+              { icon: TestTube, title: "Pharmacies", count: "1,200+", desc: "Pharmacies Delivered" },
+              { icon: Activity, title: "Diagnostic Centers", count: "800+", desc: "Diagnostic Centers as partners" },
+              { icon: Award, title: "Insurers", count: "50+", desc: "Insurers covered" },
+            ].map((stat, idx) => {
+              const IconComponent = stat.icon
+              return (
+                <div key={idx} className="text-center p-6 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-2xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300 hover:shadow-lg">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-[#393185] to-[#7AB735] rounded-full flex items-center justify-center">
+                    <IconComponent className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-3xl font-bold text-[#A92881] mb-2">{stat.count}</div>
+                  <h3 className="text-lg font-semibold text-[#393185] mb-2">{stat.title}</h3>
+                  <p className="text-sm text-foreground/70">{stat.desc}</p>
+                </div>
+              )
+            })}
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-primary mb-6">Our Mission</h2>
-            <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-              Our mission is to make healthcare simple, affordable, and stress-free for Every families. We want to stand
-              with patients and their loved ones during difficult times, guiding them at every step—from diagnosis to
-              treatment and recovery.
-            </p>
-            <p className="text-lg text-foreground/70 leading-relaxed">
-              By bringing trusted doctors, hospitals, diagnostics, and support services onto one platform, we help families
-              save time, money, and worry. At Diagnoplus Health Services, our goal is to ensure that no one feels alone or
-              helpless when it comes to their health, and that quality care is always within reach.
-            </p>
+        </div>
+      </section>
+
+      {/* Making An Impact Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185]/10 via-[#7AB735]/5 to-[#A92881]/10 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-16">
+            MAKING AN IMPACT
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: Users, title: "Consultations", count: "50,00,000+", desc: "Online Consultations done" },
+              { icon: TestTube, title: "Lab Tests", count: "30,00,000+", desc: "Lab tests done" },
+              { icon: Activity, title: "Vaccinations", count: "1,00,000+", desc: "Vaccine doses administered" },
+              { icon: Heart, title: "Medicines", count: "80,00,000+", desc: "Medicines delivered" },
+            ].map((impact, idx) => {
+              const IconComponent = impact.icon
+              return (
+                <div key={idx} className="text-center p-8 bg-white rounded-2xl border-2 border-[#393185]/20 hover:border-[#7AB735] transition-all duration-300 shadow-md hover:shadow-xl">
+                  <div className="w-20 h-20 mx-auto mb-6 bg-linear-to-br from-[#A92881] to-[#393185] rounded-full flex items-center justify-center">
+                    <IconComponent className="w-10 h-10 text-white" />
+                  </div>
+                  <div className="text-4xl font-bold text-[#A92881] mb-3">{impact.count}</div>
+                  <h3 className="text-xl font-semibold text-[#393185] mb-2">{impact.title}</h3>
+                  <p className="text-sm text-foreground/70">{impact.desc}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -81,7 +551,7 @@ export default function AboutPage() {
       {/* Core Values */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-16">Our Core Values</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#A92881] mb-16">Our Core Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
@@ -93,9 +563,9 @@ export default function AboutPage() {
               { title: "Accessibility", icon: "🚀", desc: "Making quality healthcare affordable for everyone" },
               { title: "Innovation", icon: "💡", desc: "Continuously improving our services and technology" },
             ].map((value, idx) => (
-              <div key={idx} className="text-center p-8 bg-muted/20 rounded-xl border border-border">
+              <div key={idx} className="text-center p-8 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300">
                 <div className="text-4xl mb-4">{value.icon}</div>
-                <h3 className="text-xl font-semibold text-primary mb-3">{value.title}</h3>
+                <h3 className="text-xl font-semibold text-[#A92881] mb-3">{value.title}</h3>
                 <p className="text-foreground/70">{value.desc}</p>
               </div>
             ))}
@@ -106,23 +576,23 @@ export default function AboutPage() {
       {/* Focus Areas */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-balance">Our Focus Areas</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-12 text-balance">Our Focus Areas</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-secondary mb-4">Diagnostic Excellence</h3>
+              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Diagnostic Excellence</h3>
               <p className="text-foreground/70">
                 State-of-the-art laboratory facilities with certified professionals ensuring accurate and reliable test
                 results.
               </p>
             </div>
             <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-primary mb-4">Preventive Healthcare</h3>
+              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Preventive Healthcare</h3>
               <p className="text-foreground/70">
                 Comprehensive health packages designed for early disease detection and prevention, promoting wellness.
               </p>
             </div>
             <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-secondary mb-4">Partner Success</h3>
+              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Partner Success</h3>
               <p className="text-foreground/70">
                 Dedicated support and resources to ensure our partners thrive and grow their healthcare business.
               </p>
@@ -131,29 +601,47 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Quality & Compliance */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Committed to Quality & Compliance</h2>
-          <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            Diagnoplus Health Services adheres to the highest quality standards and regulatory compliance requirements,
-            ensuring patient safety and data security at every step.
-          </p>
-          <p className="text-base opacity-80">
-            Our facilities are accredited and our processes are certified to meet international healthcare standards
-          </p>
+      {/* Quality & Compliance with Awards */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185] via-[#393185]/90 to-[#7AB735] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Committed to Quality & Compliance</h2>
+            <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+              Diagnoplus Health Services adheres to the highest quality standards and regulatory compliance requirements,
+              ensuring patient safety and data security at every step.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "50+ Healthcare Awards", desc: "Recognized for excellence in healthcare services" },
+              { title: "5,000+ Health Camps", desc: "Conducted across Central India" },
+              { title: "10+ Years Experience", desc: "Trusted diagnostic excellence" },
+            ].map((award, idx) => (
+              <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-center">
+                <Award className="w-12 h-12 mx-auto mb-4 text-white" />
+                <h3 className="text-xl font-bold mb-2">{award.title}</h3>
+                <p className="text-sm opacity-90">{award.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 text-balance">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4 text-balance">
             Interested in Partnering with Diagnoplus Health Services?
           </h2>
           <p className="text-lg text-foreground/70 mb-8">Join our network and be part of the healthcare revolution</p>
           <Link href="#partner-form">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-8 text-lg">
+            <Button className="bg-[#7AB735] hover:bg-[#7AB735]/90 text-white font-semibold py-3 px-8 text-lg">
               Apply Now
             </Button>
           </Link>
@@ -167,63 +655,50 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-foreground-foreground py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Diagnoplus Health Services</h3>
-            <p className="text-gray-300">Central India's Trusted All-in-One Healthcare Platform</p>
+      {/* Gallery Section */}
+      <section id="gallery" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-white via-gray-50/50 to-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#393185]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#7AB735]/5 rounded-full blur-3xl"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 lg:mb-16">
+            <div className="inline-block px-4 py-2 bg-[#393185]/10 border border-[#393185]/20 rounded-full text-[#393185] font-semibold text-sm mb-4">
+              Our Gallery
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#A92881] mb-4 text-balance">
+              Complete Gallery
+            </h2>
+            <p className="text-base sm:text-lg text-foreground/70 mb-6 max-w-2xl mx-auto">
+              Explore all our healthcare moments and services
+            </p>
+            <div className="w-24 h-1 bg-linear-to-r from-[#393185] to-[#7AB735] mx-auto rounded-full"></div>
           </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-white">
-                  Services
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Partnership</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/benefits" className="hover:text-white">
-                  Benefits
-                </Link>
-              </li>
-              <li>
-                <a href="#partner-form" className="hover:text-white">
-                  Apply Now
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Contact</h4>
-            <p className="text-gray-300 mb-2">Email: hello@diagoplus.com</p>
-            <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
-          </div>
+          <Gallery images={[
+            "/gallery/1.jpeg",
+            "/gallery/2.jpeg",
+            "/gallery/3.jpeg",
+            "/gallery/4.jpeg",
+            "/gallery/5.jpeg",
+            "/gallery/6.jpeg",
+            "/gallery/7.jpeg",
+            "/gallery/8.jpeg",
+            "/gallery/9.jpeg",
+            "/gallery/10.jpeg",
+            "/gallery/11.jpeg",
+            "/gallery/12.jpeg",
+            "/gallery/13.jpeg",
+            "/gallery/14.jpeg",
+            "/gallery/15.jpeg",
+            "/gallery/16.jpeg",
+            "/gallery/17.jpeg",
+            "/gallery/18.jpeg",
+            "/gallery/19.jpeg",
+            "/gallery/20.jpeg",
+            "/gallery/21.jpeg",
+          ]} />
         </div>
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-300">
-          <p>&copy; 2025 Diagnoplus Health Services. All rights reserved.</p>
-        </div>
-      </footer>
+      </section>
+
+      <Footer />
     </main>
   )
 }

@@ -1,48 +1,124 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 import PartnerForm from "@/components/partner-form"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Users, Handshake } from "lucide-react"
+import Image from "next/image"
 
 export default function BenefitsPage() {
   const [activeTab, setActiveTab] = useState("partner")
 
   const partnerBenefits = [
     {
-      icon: "🔍",
-      title: "Enhanced Visibility",
-      description: "Get discovered easily by patients through Diagnoplus' digital platform, increasing your online presence without additional effort.",
+      image: "/benefits/1.jpg",
+      title: "Grow your visibility",
+      description: "Get discovered by high-intent patients, including corporate users with insured benefits. Increase your online presence and reach more patients through Diagnoplus' digital platform.",
     },
     {
-      icon: "🏆",
-      title: "Trust & Credibility",
-      description: "Association with Diagnoplus strengthens your reputation through platform-backed credibility and patient trust.",
+      image: "/benefits/2.webp",
+      title: "Start in minutes",
+      description: "Quick form filling, no complex onboarding or software required. Get started with Diagnoplus in minutes and start receiving patients immediately.",
     },
     {
-      icon: "📈",
-      title: "Higher Patient Footfall",
-      description: "Access a growing base of active patients, leading to increased bookings, repeat visits, and long-term patient relationships.",
+      image: "/benefits/3.jpg",
+      title: "Offer multiple services, unlock new income",
+      description: "Consult, refer for surgery, fulfill prescriptions, or enable lab tests through one platform. Diversify your revenue streams with multiple service offerings.",
     },
     {
-      icon: "⚙️",
-      title: "Operational Efficiency",
-      description: "Use smart technology tools to manage appointments, patient records, and reports smoothly, saving time and resources.",
+      image: "/benefits/4.jpg",
+      title: "Build patient base",
+      description: "Smart bookings, digital records, reminders, and follow-ups. Build a strong patient base with our technology tools that help you manage relationships effectively.",
     },
     {
-      icon: "📢",
-      title: "Zero-Cost Marketing Support",
-      description: "Receive promotion through Diagnoplus' campaigns and platform listings—no marketing spend required to acquire new patients.",
+      image: "/benefits/5.webp",
+      title: "No setup fees or hidden charges",
+      description: "No joining fee and 100% consultation earnings in the first month. Transparent pricing with no hidden costs—your earnings are yours to keep.",
     },
     {
-      icon: "💸",
-      title: "Your Discounts, Your Control",
-      description: "Partners have full flexibility to offer exclusive discounts ranging from 10% to 30% on OPD and IPD services to attract more patients and improve conversion rates.",
+      image: "/benefits/6.jpg",
+      title: "Get real support from real people",
+      description: "Support with onboarding, visibility, coordination, and performance improvements. Our dedicated team is here to help you succeed every step of the way.",
     },
   ]
+
+  const stats = [
+    { number: "1Cr+", label: "Active Patients", value: 10000000, suffix: "+", prefix: "" },
+    { number: "10k+", label: "Healthcare Partners", value: 10000, suffix: "+", prefix: "" },
+    { number: "50k+", label: "Daily Consultations", value: 50000, suffix: "+", prefix: "" },
+    { number: "25k+", label: "Successful Surgeries", value: 25000, suffix: "+", prefix: "" },
+    
+    { number: "7.5k+", label: "Hospitals", value: 7500, suffix: "+", prefix: "" },
+  ]
+
+  const statsRef = useRef<HTMLDivElement>(null)
+  const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0))
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true)
+            stats.forEach((stat, index) => {
+              const duration = 2000 // 2 seconds
+              const steps = 60
+              const increment = stat.value / steps
+              let current = 0
+              const timer = setInterval(() => {
+                current += increment
+                if (current >= stat.value) {
+                  current = stat.value
+                  clearInterval(timer)
+                }
+                setAnimatedStats((prev) => {
+                  const newStats = [...prev]
+                  newStats[index] = Math.floor(current)
+                  return newStats
+                })
+              }, duration / steps)
+            })
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current)
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current)
+      }
+    }
+  }, [hasAnimated])
+
+  const formatNumber = (value: number, stat: typeof stats[0]) => {
+    if (value === 0) return stat.number
+    if (stat.value >= 10000000) {
+      const cr = value / 10000000
+      return `${cr >= 1 ? Math.floor(cr) : cr.toFixed(1)}Cr${stat.suffix}`
+    } else if (stat.value >= 100000) {
+      const lakh = value / 100000
+      return `${lakh >= 1 ? Math.floor(lakh) : lakh.toFixed(1)}L${stat.suffix}`
+    } else if (stat.value >= 1000) {
+      const k = value / 1000
+      // Handle 7.5k case
+      if (stat.value === 7500) {
+        return k === 7.5 ? "7.5k+" : `${k.toFixed(1)}k${stat.suffix}`
+      }
+      return `${k >= 1 ? Math.floor(k) : k.toFixed(1)}k${stat.suffix}`
+    } else {
+      return `${Math.floor(value)}${stat.suffix}`
+    }
+  }
 
   const patientBenefits = [
     {
@@ -84,12 +160,26 @@ export default function BenefitsPage() {
       <Navbar />
 
       {/* Header Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-primary/5 to-secondary/5">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 text-balance">Benefits & Value Proposition</h1>
-          <p className="text-lg text-foreground/70 max-w-2xl">
-            Discover the advantages of joining Diagnoplus Health Services as a partner or patient
-          </p>
+      <section className="relative py-0 px-0 overflow-hidden">
+        <div className="relative h-[400px] sm:h-[500px] lg:h-[800px] w-full">
+          <Image
+            src="/banner.webp"
+            alt="Benefits Banner"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-br from-[#393185]/60 via-[#393185]/50 to-[#7AB735]/40"></div>
+          <div className="absolute inset-0 flex items-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 text-balance drop-shadow-lg">
+                Benefits & Value Proposition
+              </h1>
+              <p className="text-lg sm:text-xl text-white/90 max-w-2xl drop-shadow-md">
+                Discover the advantages of joining Diagnoplus Health Services as a partner or patient
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -103,7 +193,7 @@ export default function BenefitsPage() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="flex items-center gap-2 border-primary text-primary hover:bg-primary/5 bg-transparent"
+                  className="flex items-center gap-2 border-[#393185] text-[#393185] hover:bg-[#393185]/5 bg-transparent"
                 >
                   {activeTab === "partner" ? "Partner Benefits" : "Patient Benefits"}
                   <ChevronDown className="w-4 h-4" />
@@ -112,13 +202,13 @@ export default function BenefitsPage() {
               <DropdownMenuContent align="center" className="w-56">
                 <DropdownMenuItem
                   onClick={() => setActiveTab("partner")}
-                  className={activeTab === "partner" ? "bg-primary/10 text-primary font-semibold" : ""}
+                  className={activeTab === "partner" ? "bg-[#393185]/10 text-[#393185] font-semibold" : ""}
                 >
                   Partner Benefits
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setActiveTab("patient")}
-                  className={activeTab === "patient" ? "bg-primary/10 text-primary font-semibold" : ""}
+                  className={activeTab === "patient" ? "bg-[#393185]/10 text-[#393185] font-semibold" : ""}
                 >
                   Patient Benefits
                 </DropdownMenuItem>
@@ -130,58 +220,149 @@ export default function BenefitsPage() {
 
       {/* Content Section */}
       {activeTab === "partner" ? (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 text-balance">
-                Why Partner with Diagnoplus Health Services
-              </h2>
-              <p className="text-2xl font-semibold text-secondary mb-2">More Visibility. More Patients. Zero Marketing Cost.</p>
-              <p className="text-xl text-foreground/70">Your Expertise, Our Platform—Growing Together</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {partnerBenefits.map((benefit, idx) => (
-                <div
-                  key={idx}
-                  className="p-8 bg-muted/20 rounded-xl border border-border hover:border-primary/30 transition"
-                >
-                  <div className="text-4xl mb-4">{benefit.icon}</div>
-                  <h3 className="text-xl font-semibold text-primary mb-3">{benefit.title}</h3>
-                  <p className="text-foreground/70">{benefit.description}</p>
+        <>
+          {/* Hero Section */}
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#393185] mb-6 leading-tight">
+                    Power your practice with Diagnoplus!
+                  </h2>
+                  <p className="text-xl sm:text-2xl text-foreground/70 mb-8 leading-relaxed">
+                    India's Leading Digital Healthcare Company. Join and help us serve 1 crore+ Indians.
+                  </p>
+                  <Link href="#partner-form">
+                    <Button className="bg-[#393185] hover:bg-[#393185]/90 text-white font-semibold py-6 px-8 lg:px-12 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                      Join Diagnoplus Network
+                    </Button>
+                  </Link>
                 </div>
-              ))}
+                <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
+                  <Image
+                    src="/benefits1.webp"
+                    alt="Diagnoplus Benefits"
+                    fill
+                    className="object-cover rounded-2xl"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
-            <div className="bg-primary text-white p-12 rounded-xl text-center">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">A Strong Patient Base from Day One</h3>
-              <p className="mb-6 text-lg opacity-90 max-w-3xl mx-auto">
+          </section>
+
+          {/* Be where healthcare happens */}
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-12 lg:mb-16">
+                Be where healthcare happens
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
+                  <Image
+                    src="/benefits2.webp"
+                    alt="Diagnoplus Benefits"
+                    fill
+                    className="object-cover rounded-2xl"
+                    priority
+                  />
+                </div>
+                <div>
+                  <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed mb-6">
+                    Our vision is to make high-quality healthcare accessible to a billion Indians. We connect providers to a growing network of patients for various services like doctor consultations, lab tests, medicine orders, and surgical care.
+                  </p>
+                  <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed">
+                    By joining Diagnoplus, you become part of India's largest digital healthcare ecosystem, reaching millions of patients who need your expertise and services.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Statistics Section */}
+          <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-7xl mx-auto">
+              <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 justify-items-center">
+                {stats.map((stat, idx) => (
+                  <div key={idx} className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-[200px]">
+                    <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#393185] mb-2">
+                      {formatNumber(animatedStats[idx], stat)}
+                    </div>
+                    <div className="text-sm sm:text-base text-foreground/70 font-medium">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Why Join Section */}
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-12 lg:mb-16">
+                Why join Diagnoplus?
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {partnerBenefits.map((benefit, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
+                  >
+                    <div className="relative h-48 w-full overflow-hidden">
+                      <Image
+                        src={benefit.image}
+                        alt={benefit.title}
+                        fill
+                        className="object-cover transition-transform duration-300 hover:scale-110"
+                      />
+                    </div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-xl sm:text-2xl font-bold text-[#393185] mb-4 capitalize">{benefit.title}</h3>
+                      <p className="text-foreground/70 mb-6 flex-1 leading-relaxed">{benefit.description}</p>
+                      <Link href="#partner-form" className="mt-auto">
+                        <Button className="w-full bg-[#393185] hover:bg-[#393185]/90 text-white font-semibold py-3">
+                          Get Started
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Strong Patient Base CTA */}
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185] to-[#7AB735] text-white">
+            <div className="max-w-7xl mx-auto text-center">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">A Strong Patient Base from Day One</h3>
+              <p className="text-lg sm:text-xl opacity-95 mb-8 max-w-4xl mx-auto leading-relaxed">
                 Diagnoplus brings over 1 million active patients across Chhattisgarh, Madhya Pradesh, and the entire
                 Vidarbha region. Our partners benefit from immediate access to a trusted, established, and continuously
                 growing patient network—ensuring faster growth and sustained demand.
               </p>
               <Link href="#partner-form">
-                <Button className="bg-white text-primary hover:bg-white/90 font-semibold py-3 px-8">
+                <Button className="bg-white text-[#393185] hover:bg-white/90 font-semibold py-6 px-8 lg:px-12 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
                   Start Your Partnership Journey
                 </Button>
               </Link>
             </div>
-          </div>
-        </section>
+          </section>
+        </>
       ) : (
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-balance text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-12 text-balance text-center">
               Quality Healthcare for Everyone
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {patientBenefits.map((benefit, idx) => (
                 <div
                   key={idx}
-                  className="p-8 bg-muted/20 rounded-xl border border-border hover:border-secondary/30 transition"
+                  className="p-8 bg-muted/20 rounded-xl border border-border hover:border-[#7AB735]/30 transition"
                 >
-                  <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-[#7AB735]/10 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-2xl">❤️</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-primary mb-3">{benefit.title}</h3>
+                  <h3 className="text-xl font-semibold text-[#A92881] mb-3">{benefit.title}</h3>
                   <p className="text-foreground/70">{benefit.description}</p>
                 </div>
               ))}
@@ -191,15 +372,15 @@ export default function BenefitsPage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-primary/5 to-secondary/5">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185]/5 via-[#7AB735]/5 to-[#A92881]/5">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 text-balance">Join Our Growing Network</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4 text-balance">Join Our Growing Network</h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
             Whether you're looking to partner with us or access quality healthcare, Diagnoplus Health Services is here to
             serve you
           </p>
           <Link href="#partner-form">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-8 text-lg">
+            <Button className="bg-[#7AB735] hover:bg-[#7AB735]/90 text-white font-semibold py-3 px-8 text-lg">
               Get Started Today
             </Button>
           </Link>
@@ -213,63 +394,7 @@ export default function BenefitsPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-foreground-foreground py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Diagnoplus Health Services</h3>
-            <p className="text-gray-300">Central India's Trusted All-in-One Healthcare Platform</p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-white">
-                  Services
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Partnership</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/benefits" className="hover:text-white">
-                  Benefits
-                </Link>
-              </li>
-              <li>
-                <a href="#partner-form" className="hover:text-white">
-                  Apply Now
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Contact</h4>
-            <p className="text-gray-300 mb-2">Email: hello@diagoplus.com</p>
-            <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
-          </div>
-        </div>
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-300">
-          <p>&copy; 2025 Diagnoplus Health Services. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   )
 }

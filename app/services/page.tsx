@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 import PartnerForm from "@/components/partner-form"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -75,9 +76,9 @@ export default function ServicesPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-primary/5 to-secondary/5">
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185]/5 via-[#7AB735]/5 to-[#A92881]/5">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 text-balance">Our Services</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#A92881] mb-6 text-balance">Our Services</h1>
           <p className="text-lg text-foreground/70 max-w-2xl">
             Comprehensive healthcare services designed to meet all your medical needs across Central India
           </p>
@@ -87,7 +88,7 @@ export default function ServicesPage() {
       {/* Service Categories */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-4 text-balance">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#A92881] mb-4 text-balance">
             Service Categories
           </h2>
           <p className="text-center text-foreground/70 mb-12 max-w-2xl mx-auto">
@@ -98,7 +99,7 @@ export default function ServicesPage() {
             {serviceCategories.map((category, idx) => (
               <div
                 key={idx}
-                className="bg-muted/20 p-6 rounded-xl border border-border hover:border-primary/30 transition shadow-sm"
+                className="bg-muted/20 p-6 rounded-xl border border-border hover:border-[#393185]/30 transition shadow-sm"
               >
                 <div className="relative w-16 h-16 mb-4">
                   <Image
@@ -108,11 +109,11 @@ export default function ServicesPage() {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-primary mb-4">{category.title}</h3>
+                <h3 className="text-xl font-semibold text-[#A92881] mb-4">{category.title}</h3>
                 <ul className="space-y-2">
                   {category.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="flex items-start gap-2 text-foreground/70">
-                      <CheckCircle2 className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-5 h-5 text-[#7AB735] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -126,7 +127,7 @@ export default function ServicesPage() {
       {/* Service Process */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-16 text-balance">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#A92881] mb-16 text-balance">
             How Our Services Work
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -138,12 +139,12 @@ export default function ServicesPage() {
               { num: "5", title: "Ongoing Support", desc: "Continuous care and follow-up" },
             ].map((step, idx) => (
               <div key={idx} className="relative">
-                <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg mb-4 mx-auto">
+                <div className="bg-[#393185] text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg mb-4 mx-auto">
                   {step.num}
                 </div>
-                <h3 className="font-semibold text-center text-primary mb-2">{step.title}</h3>
+                <h3 className="font-semibold text-center text-[#A92881] mb-2">{step.title}</h3>
                 <p className="text-center text-sm text-foreground/70">{step.desc}</p>
-                {idx < 4 && <div className="hidden md:block absolute top-6 -right-4 text-2xl text-primary/30">→</div>}
+                {idx < 4 && <div className="hidden md:block absolute top-6 -right-4 text-2xl text-[#393185]/30">→</div>}
               </div>
             ))}
           </div>
@@ -151,12 +152,12 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185] to-[#7AB735] text-white">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Access Our Services?</h2>
           <p className="text-lg opacity-90 mb-8">Get started with Diagnoplus Health Services today</p>
           <Link href="/contact">
-            <Button className="bg-white text-primary hover:bg-white/90 font-semibold py-3 px-8 text-lg">
+            <Button className="bg-white text-[#393185] hover:bg-white/90 font-semibold py-3 px-8 text-lg">
               Contact Us
             </Button>
           </Link>
@@ -170,63 +171,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-foreground-foreground py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Diagnoplus Health Services</h3>
-            <p className="text-gray-300">Central India's Trusted All-in-One Healthcare Platform</p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/" className="hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-white">
-                  Services
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Partnership</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                <Link href="/benefits" className="hover:text-white">
-                  Benefits
-                </Link>
-              </li>
-              <li>
-                <a href="#partner-form" className="hover:text-white">
-                  Apply Now
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-white">Contact</h4>
-            <p className="text-gray-300 mb-2">Email: hello@diagoplus.com</p>
-            <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
-          </div>
-        </div>
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-300">
-          <p>&copy; 2025 Diagnoplus Health Services. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   )
 }
