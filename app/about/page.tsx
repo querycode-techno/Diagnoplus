@@ -217,7 +217,7 @@ function VisionMissionCarousel() {
           onActiveIndexChange={(index) => setActiveIndex(index)}
         >
           {/* Vision Card */}
-          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[600px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
+          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[800px] sm:h-[700px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
             <div className="absolute inset-0">
               <Image
                 src="/about/Vision.png"
@@ -226,21 +226,21 @@ function VisionMissionCarousel() {
                 className="object-contain transition-transform duration-500 group-hover:scale-105"
                 priority
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-500"></div>
+              <div className="absolute inset-0 bg-black/70 md:bg-black/0 md:group-hover:bg-black/70 transition-all duration-500"></div>
             </div>
-            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 text-white z-10">
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4">Our Vision</h2>
-                <p className="text-xl md:text-2xl font-semibold text-white mb-6">
+            <div className="absolute inset-0 flex flex-col justify-start md:justify-center p-6 sm:p-8 md:p-12 text-white z-10 overflow-y-auto">
+              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 space-y-5 pt-4 md:pt-0">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#A92881] mb-3 sm:mb-4">Our Vision</h2>
+                <p className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-4 sm:mb-6">
                   To make quality healthcare accessible to every Indian.
                 </p>
-                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-4">
+                <p className="text-lg sm:text-base md:text-lg text-white/90 leading-relaxed mb-3 sm:mb-4">
                   In India, we have seen a painful reality—good health insurance and quality healthcare are still too
                   expensive for many people. For countless middle-class families, falling sick does not only affect health,
                   it also creates fear of heavy medical expenses. Healthcare, which should be a basic right, often turns into
                   a financial struggle.
                 </p>
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                <p className="text-lg sm:text-base md:text-lg text-white/90 leading-relaxed pb-4 md:pb-0">
                   This reality gave birth to Diagnoplus Health Services. Our vision is clear and heartfelt—to make healthcare
                   easy, affordable, and accessible for every middle-class Indian family. We want people to focus on recovery
                   and well-being, not on bills and stress.
@@ -250,7 +250,7 @@ function VisionMissionCarousel() {
           </div>
 
           {/* Mission Card */}
-          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[600px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
+          <div className="shrink-0 w-full min-w-[90vw] sm:min-w-[500px] md:min-w-[600px] lg:min-w-[700px] group relative h-[800px] sm:h-[700px] md:h-[700px] rounded-2xl overflow-hidden snap-center pointer-events-auto">
             <div className="absolute inset-0">
               <Image
                 src="/about/missionn.webp"
@@ -259,17 +259,17 @@ function VisionMissionCarousel() {
                 className="object-contain transition-transform duration-500 group-hover:scale-105"
                 priority
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-500"></div>
+              <div className="absolute inset-0 bg-black/70 md:bg-black/0 md:group-hover:bg-black/70 transition-all duration-500"></div>
             </div>
-            <div className="absolute inset-0 flex flex-col justify-center p-8 md:p-12 text-white z-10">
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-4">Our Mission</h2>
-                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-4">
+            <div className="absolute inset-0 flex flex-col justify-start md:justify-center p-6 sm:p-8 md:p-12 text-white z-10 overflow-y-auto">
+              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 space-y-5 pt-4 md:pt-0">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#A92881] mb-3 sm:mb-4">Our Mission</h2>
+                <p className="text-lg sm:text-base md:text-lg text-white/90 leading-relaxed mb-3 sm:mb-4">
                   Our mission is to make healthcare simple, affordable, and stress-free for every family. We want to stand
                   with patients and their loved ones during difficult times, guiding them at every step—from diagnosis to
                   treatment and recovery.
                 </p>
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                <p className="text-lg sm:text-base md:text-lg text-white/90 leading-relaxed pb-4 md:pb-0">
                   By bringing trusted doctors, hospitals, diagnostics, and support services onto one platform, we help families
                   save time, money, and worry. At Diagnoplus Health Services, our goal is to ensure that no one feels alone or
                   helpless when it comes to their health, and that quality care is always within reach.
@@ -279,11 +279,11 @@ function VisionMissionCarousel() {
           </div>
         </ScrollableContainer>
 
-        {/* Navigation Buttons - Positioned on sides */}
+        {/* Navigation Buttons - Positioned on sides (Desktop & Tablet) */}
         <button
           onClick={() => scrollFunctionsRef.current?.scrollLeft()}
           disabled={activeIndex === 0}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -291,14 +291,50 @@ function VisionMissionCarousel() {
         <button
           onClick={() => scrollFunctionsRef.current?.scrollRight()}
           disabled={activeIndex === totalCards - 1}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full bg-[#393185] hover:bg-[#393185]/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Dots Indicator */}
-        <div className="flex justify-center items-center gap-2 mt-6">
+        {/* Bottom Controls for Mobile */}
+        <div className="mt-6 flex flex-col items-center gap-3 md:hidden">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => scrollFunctionsRef.current?.scrollLeft()}
+              disabled={activeIndex === 0}
+              className="px-4 py-2 rounded-full border border-[#393185]/40 text-xs font-semibold text-[#393185] bg-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => scrollFunctionsRef.current?.scrollRight()}
+              disabled={activeIndex === totalCards - 1}
+              className="px-4 py-2 rounded-full bg-[#393185] text-white text-xs font-semibold shadow-md disabled:bg-[#393185]/60 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center items-center gap-2">
+            {Array.from({ length: totalCards }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollFunctionsRef.current?.scrollToIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  activeIndex === index
+                    ? 'bg-[#7AB735] w-6'
+                    : 'bg-[#393185]/30 hover:bg-[#393185]/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Dots Indicator (Desktop & Tablet) */}
+        <div className="hidden md:flex justify-center items-center gap-2 mt-6">
           {Array.from({ length: totalCards }).map((_, index) => (
             <button
               key={index}
@@ -318,6 +354,58 @@ function VisionMissionCarousel() {
 }
 
 export default function AboutPage() {
+  const poweredStats = [
+    { icon: Activity, title: "Health Camps", value: 4000 },
+    { icon: Users, title: "Doctor Healthpreneurs", value: 500 },
+    { icon: MapPin, title: "Pickup Point Centers", value: 150 },
+    { icon: Heart, title: "Support Teams", value: 100 },
+  ]
+
+  const [poweredCounts, setPoweredCounts] = useState<number[]>(poweredStats.map(() => 0))
+  const [poweredStarted, setPoweredStarted] = useState(false)
+  const poweredRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !poweredStarted) {
+            setPoweredStarted(true)
+            poweredStats.forEach((stat, idx) => {
+              const duration = 1500
+              const steps = 60
+              const increment = stat.value / steps
+              let current = 0
+              const timer = setInterval(() => {
+                current += increment
+                if (current >= stat.value) {
+                  current = stat.value
+                  clearInterval(timer)
+                }
+                setPoweredCounts((prev) => {
+                  const next = [...prev]
+                  next[idx] = Math.floor(current)
+                  return next
+                })
+              }, duration / steps)
+            })
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (poweredRef.current) {
+      observer.observe(poweredRef.current)
+    }
+
+    return () => {
+      if (poweredRef.current) {
+        observer.unobserve(poweredRef.current)
+      }
+    }
+  }, [poweredStarted])
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -368,16 +456,26 @@ export default function AboutPage() {
                 WE ARE DIAGNOPLUS<br />AN END-TO-END<br />DIGITAL HEALTHCARE PLATFORM
               </h2>
               <p className="text-lg text-foreground/70 leading-relaxed mb-4">
-                Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
-                services simpler, faster, and more affordable across India. By combining technology with a trusted
-                healthcare network, we provide end-to-end support for patients and families.
+                Diagnoplus Health Services is a{" "}
+                <span className="font-semibold text-[#A92881]">patient-centric digital healthcare platform</span>{" "}
+                committed to making quality medical services{" "}
+                <span className="font-semibold text-[#393185]">simpler, faster, and more affordable</span> across{" "}
+                <span className="font-semibold text-[#A92881]">Central India</span>. By combining technology with a{" "}
+                <span className="font-semibold text-[#393185]">trusted healthcare network</span>, we provide{" "}
+                <span className="font-semibold text-[#A92881]">end-to-end support</span> for patients and families.
               </p>
               <p className="text-lg text-foreground/70 leading-relaxed">
-                Our comprehensive services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
-                and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
-                services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
-                and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
-                sections of society.
+                Our comprehensive services include{" "}
+                <span className="font-semibold text-[#393185]">
+                  diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD &amp; IPD coordination,
+                  planned surgeries, ambulance services, home healthcare support, patient assistance services,
+                </span>{" "}
+                and{" "}
+                <span className="font-semibold text-[#A92881]">secure digital storage of lifelong health records</span>.
+                We focus on{" "}
+                <span className="font-semibold text-[#393185]">reducing healthcare complexity and costs</span> while maintaining{" "}
+                <span className="font-semibold text-[#A92881]">high standards of care</span>, ensuring{" "}
+                <span className="font-semibold text-[#393185]">reliable and timely medical support</span> for all sections of society.
               </p>
             </div>
             <div className="relative">
@@ -489,23 +587,18 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-[#A92881] mb-16">
             POWERED BY PARTNERSHIPS
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {[
-              { icon: Users, title: "Doctors", count: "5,000+", desc: "Doctors across 20+ specialities" },
-              { icon: Building2, title: "Hospitals", count: "500+", desc: "Hospitals now available" },
-              { icon: TestTube, title: "Pharmacies", count: "1,200+", desc: "Pharmacies Delivered" },
-              { icon: Activity, title: "Diagnostic Centers", count: "800+", desc: "Diagnostic Centers as partners" },
-              { icon: Award, title: "Insurers", count: "50+", desc: "Insurers covered" },
-            ].map((stat, idx) => {
+          <div ref={poweredRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {poweredStats.map((stat, idx) => {
               const IconComponent = stat.icon
+              const value = poweredStarted ? poweredCounts[idx] : 0
+              const display = value > 0 ? `${value.toLocaleString()}+` : "0+"
               return (
                 <div key={idx} className="text-center p-6 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-2xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300 hover:shadow-lg">
                   <div className="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-[#393185] to-[#7AB735] rounded-full flex items-center justify-center">
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-[#A92881] mb-2">{stat.count}</div>
+                  <div className="text-3xl font-bold text-[#A92881] mb-2">{display}</div>
                   <h3 className="text-lg font-semibold text-[#393185] mb-2">{stat.title}</h3>
-                  <p className="text-sm text-foreground/70">{stat.desc}</p>
                 </div>
               )
             })}
@@ -527,10 +620,10 @@ export default function AboutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Users, title: "Consultations", count: "50,00,000+", desc: "Online Consultations done" },
-              { icon: TestTube, title: "Lab Tests", count: "30,00,000+", desc: "Lab tests done" },
-              { icon: Activity, title: "Vaccinations", count: "1,00,000+", desc: "Vaccine doses administered" },
-              { icon: Heart, title: "Medicines", count: "80,00,000+", desc: "Medicines delivered" },
+              { icon: Users, title: "Lives Served", count: "70,00,000+",  },
+              { icon: TestTube, title: "Lab Tests", count: "30,00,000+",  },
+              { icon: Activity, title: "Other Health Services Delivered", count: "2,00,000+",  },
+              { icon: Heart, title: "Monthly Reach", count: "10,00,000+",  },
             ].map((impact, idx) => {
               const IconComponent = impact.icon
               return (
@@ -540,7 +633,6 @@ export default function AboutPage() {
                   </div>
                   <div className="text-4xl font-bold text-[#A92881] mb-3">{impact.count}</div>
                   <h3 className="text-xl font-semibold text-[#393185] mb-2">{impact.title}</h3>
-                  <p className="text-sm text-foreground/70">{impact.desc}</p>
                 </div>
               )
             })}
@@ -565,8 +657,8 @@ export default function AboutPage() {
             ].map((value, idx) => (
               <div key={idx} className="text-center p-8 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300">
                 <div className="text-4xl mb-4">{value.icon}</div>
-                <h3 className="text-xl font-semibold text-[#A92881] mb-3">{value.title}</h3>
-                <p className="text-foreground/70">{value.desc}</p>
+                <h3 className="text-xl font-semibold text-[#393185] mb-3">{value.title}</h3>
+                <p className="text-black">{value.desc}</p>
               </div>
             ))}
           </div>
@@ -574,26 +666,26 @@ export default function AboutPage() {
       </section>
 
       {/* Focus Areas */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/20">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-12 text-balance">Our Focus Areas</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-[#A92881] mb-16">Our Focus Areas</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Diagnostic Excellence</h3>
-              <p className="text-foreground/70">
+            <div className="text-center p-8 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300">
+              <h3 className="text-xl font-semibold text-[#393185] mb-3">Diagnostic Excellence</h3>
+              <p className="text-black">
                 State-of-the-art laboratory facilities with certified professionals ensuring accurate and reliable test
                 results.
               </p>
             </div>
-            <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Preventive Healthcare</h3>
-              <p className="text-foreground/70">
+            <div className="text-center p-8 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300">
+              <h3 className="text-xl font-semibold text-[#393185] mb-3">Preventive Healthcare</h3>
+              <p className="text-black">
                 Comprehensive health packages designed for early disease detection and prevention, promoting wellness.
               </p>
             </div>
-            <div className="p-8 bg-white rounded-xl border border-border">
-              <h3 className="text-2xl font-bold text-[#A92881] mb-4">Partner Success</h3>
-              <p className="text-foreground/70">
+            <div className="text-center p-8 bg-linear-to-br from-[#393185]/5 to-[#7AB735]/5 rounded-xl border border-[#393185]/10 hover:border-[#7AB735] transition-all duration-300">
+              <h3 className="text-xl font-semibold text-[#393185] mb-3">Partner Success</h3>
+              <p className="text-black">
                 Dedicated support and resources to ensure our partners thrive and grow their healthcare business.
               </p>
             </div>
@@ -620,7 +712,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { title: "50+ Healthcare Awards", desc: "Recognized for excellence in healthcare services" },
-              { title: "5,000+ Health Camps", desc: "Conducted across Central India" },
+              { title: "4,000+ Health Camps", desc: "Conducted across Central India" },
               { title: "10+ Years Experience", desc: "Trusted diagnostic excellence" },
             ].map((award, idx) => (
               <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-center">

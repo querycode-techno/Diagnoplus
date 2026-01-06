@@ -14,32 +14,46 @@ export default function VideoTestimonials() {
   const testimonials = [
     {
       video: "/video/1.mp4",
-      thumbnail: "/video/1.jpg",
+      thumbnail: "/theme.png",
+      name: "Rahul Sharma",
+      description: "Smooth surgery coordination and complete support from admission to discharge.",
     },
     {
       video: "/video/2.mp4",
-      thumbnail: "/video/2.jpg",
+      thumbnail: "/theme.png",
+      name: "Arvind Raut",
+      description: "Late at night, I needed help, and Diagnoplus responded with care and urgency. Their quick report delivery and warm approach truly reflect professional service. One of the best and most trusted pathology labs in Nagpur.",
     },
     {
       video: "/video/3.mp4",
-      thumbnail: "/video/3.jpg",
+      thumbnail: "/theme.png",
+      name: "Kalyani Mam",
+      description: "The Diagnoplus team was by our side every step, making complex treatments feel simple and stress-free.",
     },
     {
       video: "/video/4.mp4",
-      thumbnail: "/video/4.jpg",
+      thumbnail: "/theme.png",
+      name: "Sunil Joshi",
+      description: "Home healthcare services helped me recover comfortably without frequent hospital visits.",
     },
     {
       video: "/video/5.mp4",
-      thumbnail: "/video/5.jpg",
+      thumbnail: "/theme.png",
+      name: "Ram Shrinivas",
+      description: "From reports to follow-ups, everything stayed organised and easy to access.",
     },
     {
       video: "/video/6.mp4",
-      thumbnail: "/video/6.jpg",
+      thumbnail: "/theme.png",
+      name: "Kavita Patil",
+      description: "Friendly team, timely reminders, and complete clarity on every step of treatment.",
     },
     {
       video: "/video/7.mp4",
-      thumbnail: "/video/7.jpg",
-    },  
+      thumbnail: "/theme.png",
+      name: "Premlata Mam",
+      description: "Diagnoplus connected me to the right specialist at the right time.",
+    },
   ]
 
   const [mutedStates, setMutedStates] = useState<boolean[]>(testimonials.map(() => true))
@@ -101,16 +115,6 @@ export default function VideoTestimonials() {
     }
   }
 
-  useEffect(() => {
-    // Auto-play all videos when component mounts
-    videoRefs.current.forEach((video, index) => {
-      if (video) {
-        video.play().catch(() => {})
-      }
-    })
-    setPlayingIndex(0) // Set first video as active for UI purposes
-  }, [])
-
   return (
     <div className="relative">
       {/* Navigation Buttons */}
@@ -142,9 +146,9 @@ export default function VideoTestimonials() {
         {testimonials.map((testimonial, idx) => (
           <div
             key={idx}
-            className="shrink-0 w-[280px] sm:w-[320px] md:w-[360px] snap-center"
+            className="shrink-0 w-[240px] sm:w-[260px] md:w-[280px] lg:w-[300px] snap-center"
           >
-            <div className="relative aspect-9/16 rounded-2xl overflow-hidden bg-black shadow-2xl group">
+            <div className="relative h-[320px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden bg-black shadow-2xl group">
               {/* Video */}
               <video
                 ref={(el) => {
@@ -161,6 +165,16 @@ export default function VideoTestimonials() {
                 playsInline
                 onClick={() => handleVideoClick(idx)}
               />
+
+              {/* Name & Description Overlay */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-linear-to-t from-black/80 via-black/40 to-transparent">
+                <p className="text-sm sm:text-base font-semibold text-white">
+                  {testimonials[idx].name}
+                </p>
+                <p className="mt-1 text-xs sm:text-sm text-white/80 line-clamp-2">
+                  {testimonials[idx].description}
+                </p>
+              </div>
 
               {/* Play/Pause Button */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

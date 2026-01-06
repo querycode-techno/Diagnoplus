@@ -35,25 +35,26 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg text-foreground mb-2">Address</h3>
                     <p className="text-foreground/70">
-                      123 Healthcare Plaza
+                      1st floor, Jagat Tower, 101, Amravati Rd,
                       <br />
-                      Medical District
+                      beside HDFC bank, Tilak Nagar, Gokulpeth,
                       <br />
-                      New York, NY 10001
+                      Nagpur, Maharashtra 440010
                     </p>
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-[#393185]/10 rounded-lg flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-[#393185]/10 rounded-lg flex items-center justify-center shrink-0">
                     <Phone className="text-[#393185]" size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-foreground mb-2">Phone</h3>
-                    <p className="text-foreground/70">
-                      <a href="tel:+15551234567" className="hover:text-[#393185]">
-                        +1 (555) 123-4567
+                    <h3 className="font-semibold text-lg text-foreground mb-2">Phone / WhatsApp</h3>
+                    <p className="text-foreground/70 space-y-1">
+                      <a href="tel:9579432665" className="block hover:text-[#393185]">
+                        +91 95794 32665
                       </a>
+                      
                     </p>
                   </div>
                 </div>
@@ -79,7 +80,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg text-foreground mb-2">WhatsApp</h3>
                     <p className="text-foreground/70">
-                      <a href="https://wa.me" target="_blank" rel="noopener noreferrer" className="hover:text-[#393185]">
+                      <a href="https://wa.me/919579432665" target="_blank" rel="noopener noreferrer" className="hover:text-[#393185]">
                         Chat with us
                       </a>
                     </p>
@@ -111,10 +112,17 @@ export default function ContactPage() {
       {/* Map Section */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-muted/20">
         <div className="max-w-7xl mx-auto">
-          <div className="w-full h-96 bg-linear-to-br from-[#393185]/10 via-[#7AB735]/10 to-[#A92881]/10 rounded-xl flex items-center justify-center border border-border">
-            <div className="text-center">
-              <MapPin className="mx-auto mb-4 text-[#393185]" size={48} />
-              <p className="text-foreground/70">Google Map Integration Coming Soon</p>
+          <div className="w-full rounded-xl overflow-hidden border border-border">
+            <div className="relative w-full h-[450px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.140635638825!2d79.05906949999999!3d21.146800799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c05fe0094211%3A0xc164507e690274cd!2sDiagno%20Plus%20Pathology%20laboratory%20and%20Health%20Services!5e0!3m2!1sen!2sin!4v1767685809861!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>

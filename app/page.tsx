@@ -303,8 +303,8 @@ export default function Home() {
     },
     {
       icon: Pill,
-      title: "Medicine",
-      description: "Order medicines",
+      title: "Nursing Care",
+      description: "Nursing care",
     },
     {
       icon: Calendar,
@@ -419,10 +419,12 @@ export default function Home() {
                   Consult with Top Doctors Online, 24x7
                 </h3>
               </div>
-              <Button className="bg-[#7AB735] text-white hover:bg-[#7AB735]/90 font-semibold py-6 px-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex items-center gap-2 whitespace-nowrap">
-                Start Consultation
-                <ArrowRight className="w-5 h-5" />
-              </Button>
+              <a href="mailto:hello@diagoplus.com">
+                <Button className="bg-[#7AB735] text-white hover:bg-[#7AB735]/90 font-semibold py-6 px-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex items-center gap-2 whitespace-nowrap">
+                  Email Us
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </a>
             </div>
           </div>
 
@@ -465,9 +467,45 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
             {/* Left Content */}
             <div className="space-y-6 lg:space-y-8 relative z-10">
-              <div className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white font-semibold text-sm mb-4">
-                 India's Trusted Healthcare Platform
+              <div className="inline-block px-4 py-2 rounded-full font-semibold text-sm mb-4 animate-fadeInUp animate-duration-700 animate-ease-in-out relative overflow-hidden" style={{}}>
+                <span className="absolute inset-0 bg-linear-to-r from-[#7AB735]/70 via-[#A92881]/80 to-[#393185]/80 blur-[2px] opacity-70 animate-gradientMove"></span>
+                <span className="relative z-10 text-[#FFF7D6] drop-shadow-[0_1px_6px_rgba(41,0,66,0.23)]" style={{letterSpacing:"1px"}}>
+                  <svg className="inline mr-2 -mb-1 animate-bounce" width={18} height={18} viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="10" fill="#7AB735"/>
+                  </svg>
+                  India's Trusted Healthcare Platform
+                  <svg className="inline ml-2 -mb-1 animate-spin-slow" width={18} height={18} viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="9" stroke="#A92881" strokeWidth="2" />
+                  </svg>
+                </span>
               </div>
+              <style jsx global>{`
+                @keyframes gradientMove {
+                  0% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                  100% { background-position: 0% 50%; }
+                }
+                .animate-gradientMove {
+                  background-size: 200% 200%;
+                  animation: gradientMove 5s ease-in-out infinite;
+                }
+                .animate-spin-slow {
+                  animation: spin 3s linear infinite;
+                }
+                @keyframes fadeInUp {
+                  from {
+                    opacity: 0;
+                    transform: translate3d(0, 16px, 0);
+                  }
+                  to {
+                    opacity: 1;
+                    transform: none;
+                  }
+                }
+                .animate-fadeInUp {
+                  animation: fadeInUp 0.8s both;
+                }
+              `}</style>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg">
                 Diagnoplus Health Services
               </h1>
@@ -526,16 +564,28 @@ export default function Home() {
             <div className="space-y-6 order-2 lg:order-1">
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-lg border border-[#393185]/10 space-y-6">
                 <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
-                  Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
-                  services simpler, faster, and more affordable across Central India. By combining technology with a trusted
-                  healthcare network, we provide end-to-end support for patients and families.
+                  Diagnoplus Health Services is a{" "}
+                  <span className="font-semibold text-[#A92881]">patient-centric digital healthcare platform</span>{" "}
+                  committed to making quality medical services{" "}
+                  <span className="font-semibold text-[#393185]">simpler, faster, and more affordable</span> across{" "}
+                  <span className="font-semibold text-[#A92881]">Central India</span>. By combining technology with a{" "}
+                  <span className="font-semibold text-[#393185]">trusted healthcare network</span>, we provide{" "}
+                  <span className="font-semibold text-[#A92881]">end-to-end support</span> for patients and families.
                 </p>
                 <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
-                  Our services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
-                  and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
-                  services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
-                  and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
-                  sections of society.
+                  Our services include{" "}
+                  <span className="font-semibold text-[#393185]">
+                    diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD &amp; IPD coordination,
+                    planned surgeries, ambulance services, home healthcare support, patient assistance services,
+                  </span>{" "}
+                  and{" "}
+                  <span className="font-semibold text-[#A92881]">secure digital storage of lifelong health records</span>.
+                  We focus on{" "}
+                  <span className="font-semibold text-[#393185]">reducing healthcare complexity and costs</span> while
+                  maintaining{" "}
+                  <span className="font-semibold text-[#A92881]">high standards of care</span>, ensuring{" "}
+                  <span className="font-semibold text-[#393185]">reliable and timely medical support</span> for all sections
+                  of society.
                 </p>
               </div>
             </div>
@@ -641,7 +691,7 @@ export default function Home() {
               What We Offer
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#A92881] mb-4 text-balance">
-            Get Cashless Hospitalization Support
+            Complete Healthcare Under One Roof
             </h2>
             <p className="text-base sm:text-lg text-foreground/70 mb-4 max-w-2xl mx-auto">
               Comprehensive healthcare services designed to meet all your medical needs
@@ -656,14 +706,14 @@ export default function Home() {
                 className="group flex flex-col items-center justify-center p-4 sm:p-6 transition-colors duration-300 cursor-pointer"
               >
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mb-3">
-                  <Image
-                    src={category.icon}
-                    alt={category.title}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="text-xs sm:text-sm font-semibold text-[#A92881] text-center leading-tight group-hover:text-[#393185] transition-colors duration-300">
+                    <Image
+                      src={category.icon}
+                      alt={category.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                <h3 className="text-xs sm:text-sm font-semibold text-[#393185] text-center leading-tight group-hover:text-[#7AB735] transition-colors duration-300">
                   {category.title}
                 </h3>
               </Link>
@@ -720,27 +770,27 @@ export default function Home() {
               <div className="text-sm sm:text-base text-foreground/70 font-medium">Lives Impacted</div>
             </div>
           </div>
-
+          
           {/* Description Card */}
           <div className="max-w-5xl mx-auto mb-12 lg:mb-16">
             <div className="bg-linear-to-br from-white to-white/95 backdrop-blur-sm rounded-3xl p-8 lg:p-12 shadow-2xl border border-[#393185]/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#393185]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#7AB735]/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
               <div className="relative z-10 space-y-6">
-                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   With over <span className="font-bold text-[#393185]">10+ years of diagnostic excellence</span>, <span className="font-bold text-[#7AB735]">5,000+ health camps</span> conducted, <span className="font-bold text-[#A92881]">lakhs of lives</span> positively
                   impacted, and <span className="font-bold text-[#393185]">50+ healthcare awards</span>, Diagnoplus has built lasting trust through clinical
-                  accuracy, ethical practices, and patient-first care.
-                </p>
-                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+                accuracy, ethical practices, and patient-first care.
+              </p>
+              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   Built on this proven legacy, the <span className="font-bold text-[#393185]">Diagnoplus HealthEasy Plans</span> has been thoughtfully designed to make
-                  healthcare more accessible, affordable, and stress-free for families. The plan brings together diagnostics,
-                  doctor consultations, hospital coordination, and wellness support under one trusted platform.
-                </p>
-                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+                healthcare more accessible, affordable, and stress-free for families. The plan brings together diagnostics,
+                doctor consultations, hospital coordination, and wellness support under one trusted platform.
+              </p>
+              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   This health plan reflects our long-standing commitment to reliable care, transparent practices, and
-                  long-term patient well-being—ensuring continuous support and peace of mind for every member.
-                </p>
+                long-term patient well-being—ensuring continuous support and peace of mind for every member.
+              </p>
               </div>
             </div>
           </div>
@@ -800,14 +850,14 @@ export default function Home() {
                   Proven Results
                 </div>
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 lg:mb-6">
-                  Average Savings of ₹80,000 - ₹1,00,000
+                  Average Savings of ₹60,000 - ₹80,000
                 </h3>
-                <p className="text-base sm:text-lg lg:text-xl opacity-95 mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
-                  Per patient annually, while also ensuring peace of mind, reduced administrative burden, and significant time savings through a streamlined, patient-centric healthcare experience.
-                </p>
+              <p className="text-base sm:text-lg lg:text-xl opacity-95 mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
+                  Per family annually, while also ensuring peace of mind, reduced administrative burden, and significant time savings through a streamlined, patient-centric healthcare experience.
+              </p>
                 <Button className="bg-white text-[#393185] hover:bg-white/90 font-bold py-6 px-8 lg:px-12 text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                  Learn More About HealthEasy Plans
-                </Button>
+                Learn More About HealthEasy Plans
+              </Button>
               </div>
             </div>
           </div>
@@ -881,7 +931,7 @@ export default function Home() {
               Video Testimonials
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#A92881] mb-4 text-balance">
-              What Our Partners & Patients Say
+              What Our Patients Say
             </h2>
             <p className="text-base sm:text-lg text-foreground/70 mb-6 max-w-2xl mx-auto">
               Real stories from real people - Watch how Diagnoplus is transforming healthcare
@@ -889,6 +939,51 @@ export default function Home() {
             <div className="w-24 h-1 bg-linear-to-r from-[#393185] to-[#7AB735] mx-auto rounded-full"></div>
           </div>
           <VideoTestimonials />
+        </div>
+      </section>
+
+      {/* Media Coverage Section */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 lg:mb-10">
+            <div className="inline-block px-4 py-2 bg-[#393185]/5 border border-[#393185]/15 rounded-full text-[#393185] font-semibold text-xs sm:text-sm mb-3">
+              Media Coverage
+            </div>
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#A92881]">
+              Featured & Trusted By Leading Platforms
+            </h3>
+          </div>
+
+          <div className="rounded-2xl border border-border/60 bg-linear-to-r from-white via-[#f9fafb] to-white shadow-sm px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-10 lg:gap-x-12">
+              {[
+                { name: "Dailyhunt", src: "/media/dailyhunt.png" },
+                { name: "Google News", src: "/media/googlenews.png" },
+                { name: "Featuring Daily", src: "/media/featuringdaily.png" },
+                { name: "The Indian Publisher", src: "/media/indianpublisher.webp" },
+                { name: "Business Up2Date", src: "/media/businessup2date.webp" },
+                { name: "Nation Times", src: "/media/nationtimes.webp" },
+                { name: "Fox Story India", src: "/media/foxstory.webp" },
+              ].map((logo, idx, arr) => (
+                <div
+                  key={logo.name}
+                  className={`flex items-center justify-center px-3 sm:px-4 ${
+                    idx !== 0 ? "sm:border-l sm:border-border/60" : ""
+                  }`}
+                >
+                  <div className="relative h-16 sm:h-20 lg:h-24 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300">
+                    <Image
+                      src={logo.src}
+                      alt={logo.name}
+                      width={240}
+                      height={96}
+                      className="h-full w-auto object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PartnerForm from "@/components/partner-form"
@@ -46,79 +46,79 @@ export default function BenefitsPage() {
     },
   ]
 
-  const stats = [
-    { number: "1Cr+", label: "Active Patients", value: 10000000, suffix: "+", prefix: "" },
-    { number: "10k+", label: "Healthcare Partners", value: 10000, suffix: "+", prefix: "" },
-    { number: "50k+", label: "Daily Consultations", value: 50000, suffix: "+", prefix: "" },
-    { number: "25k+", label: "Successful Surgeries", value: 25000, suffix: "+", prefix: "" },
+  // const stats = [
+  //   { number: "1Cr+", label: "Active Patients", value: 10000000, suffix: "+", prefix: "" },
+  //   { number: "10k+", label: "Healthcare Partners", value: 10000, suffix: "+", prefix: "" },
+  //   { number: "50k+", label: "Daily Consultations", value: 50000, suffix: "+", prefix: "" },
+  //   { number: "25k+", label: "Successful Surgeries", value: 25000, suffix: "+", prefix: "" },
     
-    { number: "7.5k+", label: "Hospitals", value: 7500, suffix: "+", prefix: "" },
-  ]
+  //   { number: "7.5k+", label: "Hospitals", value: 7500, suffix: "+", prefix: "" },
+  // ]
 
   const statsRef = useRef<HTMLDivElement>(null)
-  const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0))
+  // const [animatedStats, setAnimatedStats] = useState(stats.map(() => 0))
   const [hasAnimated, setHasAnimated] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true)
-            stats.forEach((stat, index) => {
-              const duration = 2000 // 2 seconds
-              const steps = 60
-              const increment = stat.value / steps
-              let current = 0
-              const timer = setInterval(() => {
-                current += increment
-                if (current >= stat.value) {
-                  current = stat.value
-                  clearInterval(timer)
-                }
-                setAnimatedStats((prev) => {
-                  const newStats = [...prev]
-                  newStats[index] = Math.floor(current)
-                  return newStats
-                })
-              }, duration / steps)
-            })
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting && !hasAnimated) {
+  //           setHasAnimated(true)
+  //           stats.forEach((stat, index) => {
+  //             const duration = 2000 // 2 seconds
+  //             const steps = 60
+  //             const increment = stat.value / steps
+  //             let current = 0
+  //             const timer = setInterval(() => {
+  //               current += increment
+  //               if (current >= stat.value) {
+  //                 current = stat.value
+  //                 clearInterval(timer)
+  //               }
+  //               setAnimatedStats((prev) => {
+  //                 const newStats = [...prev]
+  //                 newStats[index] = Math.floor(current)
+  //                 return newStats
+  //               })
+  //             }, duration / steps)
+  //           })
+  //         }
+  //       })
+  //     },
+  //     { threshold: 0.3 }
+  //   )
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current)
-    }
+  //   if (statsRef.current) {
+  //     observer.observe(statsRef.current)
+  //   }
 
-    return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current)
-      }
-    }
-  }, [hasAnimated])
+  //   return () => {
+  //     if (statsRef.current) {
+  //       observer.unobserve(statsRef.current)
+  //     }
+  //   }
+  // }, [hasAnimated])
 
-  const formatNumber = (value: number, stat: typeof stats[0]) => {
-    if (value === 0) return stat.number
-    if (stat.value >= 10000000) {
-      const cr = value / 10000000
-      return `${cr >= 1 ? Math.floor(cr) : cr.toFixed(1)}Cr${stat.suffix}`
-    } else if (stat.value >= 100000) {
-      const lakh = value / 100000
-      return `${lakh >= 1 ? Math.floor(lakh) : lakh.toFixed(1)}L${stat.suffix}`
-    } else if (stat.value >= 1000) {
-      const k = value / 1000
-      // Handle 7.5k case
-      if (stat.value === 7500) {
-        return k === 7.5 ? "7.5k+" : `${k.toFixed(1)}k${stat.suffix}`
-      }
-      return `${k >= 1 ? Math.floor(k) : k.toFixed(1)}k${stat.suffix}`
-    } else {
-      return `${Math.floor(value)}${stat.suffix}`
-    }
-  }
+  // const formatNumber = (value: number, stat: typeof stats[0]) => {
+  //   if (value === 0) return stat.number
+  //   if (stat.value >= 10000000) {
+  //     const cr = value / 10000000
+  //     return `${cr >= 1 ? Math.floor(cr) : cr.toFixed(1)}Cr${stat.suffix}`
+  //   } else if (stat.value >= 100000) {
+  //     const lakh = value / 100000
+  //     return `${lakh >= 1 ? Math.floor(lakh) : lakh.toFixed(1)}L${stat.suffix}`
+  //   } else if (stat.value >= 1000) {
+  //     const k = value / 1000
+  //     // Handle 7.5k case
+  //     if (stat.value === 7500) {
+  //       return k === 7.5 ? "7.5k+" : `${k.toFixed(1)}k${stat.suffix}`
+  //     }
+  //     return `${k >= 1 ? Math.floor(k) : k.toFixed(1)}k${stat.suffix}`
+  //   } else {
+  //     return `${Math.floor(value)}${stat.suffix}`
+  //   }
+  // }
 
   const patientBenefits = [
     {
@@ -152,6 +152,70 @@ export default function BenefitsPage() {
     {
       title: "Wellness Benefits",
       description: "Exclusive discounts on gym memberships, fitness programs, and wellness services",
+    },
+  ]
+
+  const serviceCategories = [
+    {
+      icon: "/icons/Diagnostics.png",
+      title: "Diagnostics",
+      items: ["Pathology Lab Tests", "Preventive Health Check-up Packages"],
+    },
+    {
+      icon: "/icons/imaging.png",
+      title: "Imaging",
+      items: ["Radiology, MRI & CT Scans", "ECG & X-Ray at Home"],
+    },
+    {
+      icon: "/icons/doctor-consultations.png",
+      title: "Doctor Consultations",
+      items: [
+        "OPD & IPD Consultation Assistance",
+        "Video / Audio Doctor Consultation",
+        "Doctor at Home Services",
+        "Specialist & Super-Specialist Access",
+      ],
+    },
+    {
+      icon: "/icons/hospital-surgical-care.png",
+      title: "Hospital & Surgical Care",
+      items: ["Planned Surgeries", "IPD Coordination & Bed Management", "Surgical Equipment on Rent", "Surgeries on EMI"],
+    },
+    {
+      icon: "/icons/emergency-critical-support.png",
+      title: "Emergency & Critical Support",
+      items: ["Ambulance Services", "Blood Bank Assistance", "Emergency Care Coordination"],
+    },
+    {
+      icon: "/icons/healthcare.png",
+      title: "Home Healthcare",
+      items: ["Home Nursing Services", "Home Patient Care", "Elderly & Post-Surgery Care"],
+    },
+    {
+      icon: "/icons/leaf.png",
+      title: "Wellness & Alternative Care",
+      items: ["Panchkarma Therapies", "Herbal Supplements & Treatments", "Preventive & Lifestyle Care Programs"],
+    },
+    {
+      icon: "/icons/health-awareness.png",
+      title: "Health Awareness & Lifestyle Disease Management",
+      items: [
+        "Health Awareness Programs",
+        "Lifestyle Disease Management (Diabetes, BP, Thyroid, Obesity)",
+        "Diabetes Care & Management Programs",
+        "Diet & Nutrition Consultation",
+        "Preventive Health Counseling",
+      ],
+    },
+    {
+      icon: "/icons/digital-health-records.png",
+      title: "Digital Health Records",
+      items: ["Lifetime Secure Digital Storage", "Access Reports Anytime, Anywhere", "Centralized Health History"],
+    },
+    {
+      icon: "/icons/lifestyle-wellness-benefits.png",
+      title: "Lifestyle & Wellness Benefits",
+      items: ["Gym Membership Discounts", "Zumba & Fitness Subscriptions", "Wellness Programs & Exclusive Offers"],
     },
   ]
 
@@ -193,7 +257,7 @@ export default function BenefitsPage() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="flex items-center gap-2 border-[#393185] text-[#393185] hover:bg-[#393185]/5 bg-transparent"
+                  className="flex items-center gap-2 border-[#393185] text-[#393185] hover:bg-[#393185]/5 hover:text-[#A92881] bg-transparent"
                 >
                   {activeTab === "partner" ? "Partner Benefits" : "Patient Benefits"}
                   <ChevronDown className="w-4 h-4" />
@@ -221,6 +285,18 @@ export default function BenefitsPage() {
       {/* Content Section */}
       {activeTab === "partner" ? (
         <>
+
+        {/* Highlight: Strong Patient Base */}
+        <section className="py-8 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[#393185]/5 via-white to-[#7AB735]/5 border-y border-border/40">
+            <div className="max-w-7xl mx-auto flex justify-center">
+              <div className="inline-flex items-center gap-4 px-5 sm:px-8 py-4 rounded-full bg-white/95 shadow-lg border border-[#393185]/20">
+                <span className="w-3 h-3 rounded-full bg-[#7AB735] animate-pulse"></span>
+                <span className="typing-highlight font-extrabold text-base sm:text-lg lg:text-2xl text-[#393185] tracking-wide">
+                  A Strong Patient Base from Day One
+                </span>
+              </div>
+            </div>
+          </section>
           {/* Hero Section */}
           <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-7xl mx-auto">
@@ -251,6 +327,8 @@ export default function BenefitsPage() {
             </div>
           </section>
 
+          
+
           {/* Be where healthcare happens */}
           <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-7xl mx-auto">
@@ -280,7 +358,7 @@ export default function BenefitsPage() {
           </section>
 
           {/* Statistics Section */}
-          <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+          {/* <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-7xl mx-auto">
               <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 justify-items-center">
                 {stats.map((stat, idx) => (
@@ -293,7 +371,7 @@ export default function BenefitsPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </section> */}
 
           {/* Why Join Section */}
           <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -348,27 +426,70 @@ export default function BenefitsPage() {
           </section>
         </>
       ) : (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-12 text-balance text-center">
-              Quality Healthcare for Everyone
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {patientBenefits.map((benefit, idx) => (
-                <div
-                  key={idx}
-                  className="p-8 bg-muted/20 rounded-xl border border-border hover:border-[#7AB735]/30 transition"
-                >
-                  <div className="w-12 h-12 bg-[#7AB735]/10 rounded-lg flex items-center justify-center mb-4">
-                    <span className="text-2xl">❤️</span>
+        <>
+          {/* Patient Benefits Main */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#A92881] mb-12 text-balance text-center">
+                Quality Healthcare for Everyone
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {patientBenefits.map((benefit, idx) => (
+                  <div
+                    key={idx}
+                    className="p-8 bg-muted/20 rounded-xl border border-border hover:border-[#7AB735]/30 transition"
+                  >
+                    <div className="w-12 h-12 bg-[#7AB735]/10 rounded-lg flex items-center justify-center mb-4">
+                      <span className="text-2xl">❤️</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-[#A92881] mb-3">{benefit.title}</h3>
+                    <p className="text-foreground/70">{benefit.description}</p>
                   </div>
-                  <h3 className="text-xl font-semibold text-[#A92881] mb-3">{benefit.title}</h3>
-                  <p className="text-foreground/70">{benefit.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* Patient Add-on Services (from Home Service Categories section) */}
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185]/5 via-white to-[#7AB735]/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#A92881]/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#393185]/5 rounded-full blur-3xl"></div>
+            <div className="max-w-7xl mx-auto relative z-10">
+              <div className="text-center mb-12 lg:mb-16">
+                <div className="inline-block px-4 py-2 bg-[#393185]/10 border border-[#393185]/20 rounded-full text-[#393185] font-semibold text-sm mb-4">
+                  Patient Add-on Services
+                </div>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#A92881] mb-4 text-balance">
+                  Complete Healthcare Under One Roof
+                </h2>
+                <p className="text-base sm:text-lg text-foreground/70 mb-4 max-w-2xl mx-auto">
+                  Extra services and support that make your healthcare journey simpler, safer, and more convenient.
+                </p>
+                <div className="w-24 h-1 bg-linear-to-r from-[#393185] to-[#7AB735] mx-auto rounded-full"></div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
+                {serviceCategories.map((category, idx) => (
+                  <div
+                    key={idx}
+                    className="group flex flex-col items-center justify-center p-4 sm:p-6 transition-colors duration-300 cursor-default"
+                  >
+                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mb-3">
+                      <Image
+                        src={category.icon}
+                        alt={category.title}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <h3 className="text-xs sm:text-sm font-semibold text-[#393185] text-center leading-tight group-hover:text-[#7AB735] transition-colors duration-300">
+                      {category.title}
+                    </h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
       )}
 
       {/* CTA Section */}
@@ -395,6 +516,37 @@ export default function BenefitsPage() {
       </section>
 
       <Footer />
+      <style jsx global>{`
+        @keyframes typingHighlight {
+          from {
+            width: 0;
+          }
+          to {
+            width: 100%;
+          }
+        }
+
+        @keyframes caretBlink {
+          0%,
+          100% {
+            border-color: transparent;
+          }
+          50% {
+            border-color: rgba(57, 49, 133, 0.9);
+          }
+        }
+
+        .typing-highlight {
+          position: relative;
+          display: inline-block;
+          white-space: nowrap;
+          overflow: hidden;
+          border-right: 3px solid rgba(57, 49, 133, 0.9);
+          animation:
+            typingHighlight 6s steps(36, end) 1,
+            caretBlink 0.8s step-end infinite;
+        }
+      `}</style>
     </main>
   )
 }

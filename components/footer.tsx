@@ -97,9 +97,19 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-[#7AB735] shrink-0 mt-0.5" />
-                <a href="tel:+15551234567" className="text-white/80 hover:text-white transition-colors duration-300">
-                  +1 (555) 123-4567
-                </a>
+                <div className="space-y-1">
+                  <a href="tel:9579432665" className="block text-white/80 hover:text-white transition-colors duration-300">
+                    +91 95794 32665
+                  </a>
+                  <a
+                    href="https://wa.me/919579432665"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-white/70 hover:text-white text-sm transition-colors duration-300"
+                  >
+                    WhatsApp: +91 95794 32665
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
