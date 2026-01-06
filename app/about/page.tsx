@@ -554,17 +554,27 @@ export default function AboutPage() {
 
             {/* Right Side - Text Content */}
             <div>
-              <p className="text-lg text-foreground/70 leading-relaxed mb-6">
-                Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
-                services simpler, faster, and more affordable across Central India. By combining technology with a trusted
-                healthcare network, we provide end-to-end support for patients and families.
+            <p className="text-lg text-foreground/70 leading-relaxed mb-4">
+                Diagnoplus Health Services is a{" "}
+                <span className="font-semibold text-[#A92881]">patient-centric digital healthcare platform</span>{" "}
+                committed to making quality medical services{" "}
+                <span className="font-semibold text-[#393185]">simpler, faster, and more affordable</span> across{" "}
+                <span className="font-semibold text-[#A92881]">Central India</span>. By combining technology with a{" "}
+                <span className="font-semibold text-[#393185]">trusted healthcare network</span>, we provide{" "}
+                <span className="font-semibold text-[#A92881]">end-to-end support</span> for patients and families.
               </p>
               <p className="text-lg text-foreground/70 leading-relaxed">
-                Our services include diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD
-                and IPD coordination, planned surgeries, ambulance services, home healthcare support, patient assistance
-                services, and secure digital storage of lifelong health records. We focus on reducing healthcare complexity
-                and costs while maintaining high standards of care, ensuring reliable and timely medical support for all
-                sections of society.
+                Our comprehensive services include{" "}
+                <span className="font-semibold text-[#393185]">
+                  diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD &amp; IPD coordination,
+                  planned surgeries, ambulance services, home healthcare support, patient assistance services,
+                </span>{" "}
+                and{" "}
+                <span className="font-semibold text-[#A92881]">secure digital storage of lifelong health records</span>.
+                We focus on{" "}
+                <span className="font-semibold text-[#393185]">reducing healthcare complexity and costs</span> while maintaining{" "}
+                <span className="font-semibold text-[#A92881]">high standards of care</span>, ensuring{" "}
+                <span className="font-semibold text-[#393185]">reliable and timely medical support</span> for all sections of society.
               </p>
             </div>
           </div>
