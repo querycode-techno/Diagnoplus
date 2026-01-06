@@ -419,7 +419,7 @@ export default function Home() {
                   Consult with Top Doctors Online, 24x7
                 </h3>
               </div>
-              <a href="mailto:hello@diagoplus.com">
+              <a href="mailto:healthservicesdiagnoplus@gmail.com">
                 <Button className="bg-[#7AB735] text-white hover:bg-[#7AB735]/90 font-semibold py-6 px-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 flex items-center gap-2 whitespace-nowrap">
                   Email Us
                   <ArrowRight className="w-5 h-5" />

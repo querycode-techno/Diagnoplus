@@ -91,8 +91,8 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-[#7AB735] shrink-0 mt-0.5" />
-                <a href="mailto:hello@diagoplus.com" className="text-white/80 hover:text-white transition-colors duration-300">
-                  hello@diagoplus.com
+                <a href="mailto:healthservicesdiagnoplus@gmail.com" className="text-white/80 hover:text-white transition-colors duration-300">
+                  healthservicesdiagnoplus@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-3">

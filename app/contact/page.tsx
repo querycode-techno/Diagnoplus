@@ -66,8 +66,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-lg text-foreground mb-2">Email</h3>
                     <p className="text-foreground/70">
-                      <a href="mailto:hello@diagoplus.com" className="hover:text-[#393185]">
-                        hello@diagoplus.com
+                      <a href="mailto:healthservicesdiagnoplus@gmail.com" className="hover:text-[#393185]">
+                        healthservicesdiagnoplus@gmail.com
                       </a>
                     </p>
                   </div>
