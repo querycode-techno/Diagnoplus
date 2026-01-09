@@ -140,6 +140,9 @@ export default function PartnerForm() {
     }
   }, [isSpecOpen])
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -147,28 +150,30 @@ export default function PartnerForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
-    // Create Google Form submission URL
-    const formUrl = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse"
-
-    const data = new FormData()
-    data.append("entry.FIELD_ID_1", formData.fullName)
-    data.append("entry.FIELD_ID_2", formData.businessName)
-    data.append("entry.FIELD_ID_3", formData.address)
-    data.append("entry.FIELD_ID_4", formData.pincode)
-    data.append("entry.FIELD_ID_5", formData.partnerType)
-    data.append("entry.FIELD_ID_6", formData.specialization)
-    data.append("entry.FIELD_ID_7", formData.mobileNumber)
-    // data.append("entry.FIELD_ID_8", formData.whatsappNumber)
-    data.append("entry.FIELD_ID_9", formData.email)
-    // data.append("entry.FIELD_ID_10", formData.message)
+    // Start timer for minimum loading duration (2 seconds)
+    const minLoadingTime = new Promise(resolve => setTimeout(resolve, 2000))
 
     try {
-      await fetch(formUrl, {
-        method: "POST",
-        body: data,
-        mode: "no-cors",
-      })
+      const [response] = await Promise.all([
+        fetch("/api/partner-submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }),
+        minLoadingTime, // Wait for at least 2 seconds
+      ])
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong")
+      }
+
       setSubmitted(true)
       setFormData({
         fullName: "",
@@ -179,12 +184,14 @@ export default function PartnerForm() {
         specialization: "",
         mobileNumber: "",
         email: "",
-        // message: "",
       })
       setSelectedSpecializations([])
       setTimeout(() => setSubmitted(false), 5000)
-    } catch (error) {
-      console.error("Form submission error:", error)
+    } catch (err) {
+      console.error("Form submission error:", err)
+      setError(err instanceof Error ? err.message : "Failed to submit. Please try again.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -193,8 +200,20 @@ export default function PartnerForm() {
       <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-4 lg:mb-6 text-balance">Partner Registration Form</h2>
 
       {submitted && (
-        <div className="mb-4 p-4 bg-secondary/10 border border-secondary text-secondary-foreground rounded-lg">
-          ✓ Thank you! We'll contact you soon to discuss partnership opportunities.
+        <div className="mb-6 p-6 bg-gradient-to-br from-[#7AB735]/10 via-white to-[#393185]/5 border-2 border-[#7AB735] rounded-2xl shadow-lg animate-in fade-in slide-in-from-top-2 duration-500">
+          <div className="flex items-start gap-4">
+            <div className="shrink-0 w-12 h-12 bg-[#7AB735] rounded-full flex items-center justify-center shadow-md">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-black mb-1">Application Submitted Successfully!</h3>
+              <p className="text-black/80 text-sm leading-relaxed">
+                Thank you for your interest in partnering with Diagnoplus. Our team will review your application and contact you within 24-48 hours to discuss the next steps.
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -385,11 +404,28 @@ export default function PartnerForm() {
           />
         </div> */}
 
+        {error && (
+          <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+            ✕ {error}
+          </div>
+        )}
+
         <Button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 lg:py-3 rounded-lg text-sm lg:text-base transition-all shadow-md hover:shadow-lg"
+          disabled={isLoading}
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2.5 lg:py-3 rounded-lg text-sm lg:text-base transition-all shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          Submit Partnership Application
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Submitting...
+            </span>
+          ) : (
+            "Submit Partnership Application"
+          )}
         </Button>
       </form>
     </div>

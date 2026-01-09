@@ -122,10 +122,10 @@ export default function Footer() {
               &copy; 2025 Diagnoplus Health Services. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <Link href="#" className="text-white/70 hover:text-white transition-colors duration-300">
+              <Link href="/terms-and-conditions" className="text-white/70 hover:text-white transition-colors duration-300">
                 Terms & Conditions
               </Link>
-              <Link href="#" className="text-white/70 hover:text-white transition-colors duration-300">
+              <Link href="/privacy-policy" className="text-white/70 hover:text-white transition-colors duration-300">
                 Privacy Policy
               </Link>
             </div>

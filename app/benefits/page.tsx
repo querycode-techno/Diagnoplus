@@ -51,7 +51,7 @@ export default function BenefitsPage() {
   //   { number: "10k+", label: "Healthcare Partners", value: 10000, suffix: "+", prefix: "" },
   //   { number: "50k+", label: "Daily Consultations", value: 50000, suffix: "+", prefix: "" },
   //   { number: "25k+", label: "Successful Surgeries", value: 25000, suffix: "+", prefix: "" },
-    
+
   //   { number: "7.5k+", label: "Hospitals", value: 7500, suffix: "+", prefix: "" },
   // ]
 
@@ -286,8 +286,8 @@ export default function BenefitsPage() {
       {activeTab === "partner" ? (
         <>
 
-        {/* Highlight: Strong Patient Base */}
-        <section className="py-8 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[#393185]/5 via-white to-[#7AB735]/5 border-y border-border/40">
+          {/* Highlight: Strong Patient Base */}
+          <section className="py-8 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[#393185]/5 via-white to-[#7AB735]/5 border-y border-border/40">
             <div className="max-w-7xl mx-auto flex justify-center">
               <div className="inline-flex items-center gap-4 px-5 sm:px-8 py-4 rounded-full bg-white/95 shadow-lg border border-[#393185]/20">
                 <span className="w-3 h-3 rounded-full bg-[#7AB735] animate-pulse"></span>
@@ -327,7 +327,7 @@ export default function BenefitsPage() {
             </div>
           </section>
 
-          
+
 
           {/* Be where healthcare happens */}
           <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -409,11 +409,51 @@ export default function BenefitsPage() {
           </section>
 
           {/* Strong Patient Base CTA */}
-          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-[#393185] to-[#7AB735] text-white">
-            <div className="max-w-7xl mx-auto text-center">
+          <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#393185] text-white relative overflow-hidden">
+            {/* Medical SVG Pattern Background */}
+            <div className="absolute inset-0 opacity-10">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="medical-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+                    {/* Stethoscope Icon */}
+                    <g transform="translate(10, 10)" fill="currentColor">
+                      <circle cx="8" cy="4" r="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                      <path d="M8 7 L8 16 Q8 22 14 22 Q20 22 20 16 L20 12" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                      <circle cx="20" cy="10" r="2" fill="currentColor" />
+                    </g>
+                    {/* Plus/Cross Icon */}
+                    <g transform="translate(70, 15)" fill="currentColor">
+                      <rect x="4" y="0" width="4" height="12" rx="1" />
+                      <rect x="0" y="4" width="12" height="4" rx="1" />
+                    </g>
+                    {/* Heartbeat Line */}
+                    <g transform="translate(10, 70)" stroke="currentColor" strokeWidth="1.5" fill="none">
+                      <path d="M0 10 L8 10 L12 2 L16 18 L20 6 L24 14 L28 10 L40 10" />
+                    </g>
+                    {/* Heart Icon */}
+                    <g transform="translate(70, 65)" fill="currentColor">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" transform="scale(0.7)" />
+                    </g>
+                    {/* Doctor Coat/Person */}
+                    <g transform="translate(35, 40)" stroke="currentColor" strokeWidth="1.5" fill="none">
+                      <circle cx="8" cy="4" r="4" />
+                      <path d="M0 20 L2 12 Q4 8 8 8 Q12 8 14 12 L16 20" />
+                      <line x1="8" y1="12" x2="8" y2="18" />
+                    </g>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#medical-pattern)" />
+              </svg>
+            </div>
+
+            {/* Decorative blur elements */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+
+            <div className="max-w-7xl mx-auto text-center relative z-10">
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">A Strong Patient Base from Day One</h3>
               <p className="text-lg sm:text-xl opacity-95 mb-8 max-w-4xl mx-auto leading-relaxed">
-                Diagnoplus brings over 1 million active patients across Chhattisgarh, Madhya Pradesh, and the entire
+                Diagnoplus brings over 7 million active patients across Chhattisgarh, Madhya Pradesh, and the entire
                 Vidarbha region. Our partners benefit from immediate access to a trusted, established, and continuously
                 growing patient network—ensuring faster growth and sustained demand.
               </p>

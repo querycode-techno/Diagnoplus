@@ -18,7 +18,7 @@ function HospitalCarousel({ hospitals }: { hospitals: Array<{ name: string; logo
   const slides = [
     {
       type: "hospitals",
-      title: "Top Hospitals, 100% Sponsored",
+      title: "Experts from India's top hospitals",
       description: "Book consultations at top hospitals near you",
       items: hospitals.map(h => ({ icon: Building2, title: h.name }))
     },
@@ -76,7 +76,7 @@ function HospitalCarousel({ hospitals }: { hospitals: Array<{ name: string; logo
       <div className="relative z-10">
         {/* Carousel Container */}
         <div className="relative overflow-hidden max-w-4xl mx-auto">
-          <div 
+          <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
@@ -93,7 +93,7 @@ function HospitalCarousel({ hospitals }: { hospitals: Array<{ name: string; logo
                     {slide.description}
                   </p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4 px-2">
                   {slide.items.map((item, idx) => {
                     const IconComponent = item.icon
@@ -121,7 +121,7 @@ function ImageModal({ image, isOpen, onClose }: { image: string | null; isOpen: 
   if (!isOpen || !image) return null
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
       onClick={onClose}
     >
@@ -340,7 +340,7 @@ export default function Home() {
       logo: "/hospitals/fortis.png", // You'll need to add these logos
     },
     {
-      name: "Apollo Clinic",
+      name: "Tata Clinic",
       logo: "/hospitals/apollo-clinic.png",
     },
     {
@@ -398,7 +398,7 @@ export default function Home() {
                   </span>
                 </div>
               )
-              
+
               return service.href ? (
                 <Link key={idx} href={service.href}>
                   {content}
@@ -446,11 +446,11 @@ export default function Home() {
             quality={90}
           />
         </div>
-        
+
         {/* Overlay - Combines blue overlay with gradient */}
         <div className="absolute inset-0 bg-linear-to-br from-[#393185]/80 via-[#393185]/70 to-[#393185]/60"></div>
         <div className="absolute inset-0 bg-linear-to-br from-[#393185]/10 via-[#A92881]/5 to-[#7AB735]/10"></div>
-        
+
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{
@@ -458,7 +458,7 @@ export default function Home() {
             backgroundSize: '40px 40px'
           }}></div>
         </div>
-        
+
         {/* Decorative Blur Elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
@@ -469,9 +469,9 @@ export default function Home() {
             <div className="space-y-6 lg:space-y-8 relative z-10">
               <div className="inline-block px-4 py-2 rounded-full font-semibold text-sm mb-4 animate-fadeInUp animate-duration-700 animate-ease-in-out relative overflow-hidden" style={{}}>
                 <span className="absolute inset-0 bg-linear-to-r from-[#7AB735]/70 via-[#A92881]/80 to-[#393185]/80 blur-[2px] opacity-70 animate-gradientMove"></span>
-                <span className="relative z-10 text-[#FFF7D6] drop-shadow-[0_1px_6px_rgba(41,0,66,0.23)]" style={{letterSpacing:"1px"}}>
+                <span className="relative z-10 text-[#FFF7D6] drop-shadow-[0_1px_6px_rgba(41,0,66,0.23)]" style={{ letterSpacing: "1px" }}>
                   <svg className="inline mr-2 -mb-1 animate-bounce" width={18} height={18} viewBox="0 0 20 20" fill="none">
-                    <circle cx="10" cy="10" r="10" fill="#7AB735"/>
+                    <circle cx="10" cy="10" r="10" fill="#7AB735" />
                   </svg>
                   India's Trusted Healthcare Platform
                   <svg className="inline ml-2 -mb-1 animate-spin-slow" width={18} height={18} viewBox="0 0 20 20" fill="none">
@@ -510,17 +510,17 @@ export default function Home() {
                 Diagnoplus Health Services
               </h1>
               <p className="text-xl sm:text-2xl lg:text-3xl text-white font-semibold leading-relaxed drop-shadow-md">
-                 India's Trusted All-in-One Healthcare Platform
+                India's Trusted All-in-One Healthcare Platform
               </p>
               <p className="text-lg sm:text-xl text-white/95 leading-relaxed drop-shadow-md">
-                Quality Healthcare | Accessible | Affordable 
+                Quality Healthcare | Accessible | Affordable
               </p>
               <p className="text-base sm:text-lg text-white/90 leading-relaxed drop-shadow-sm">
                 Diagnoplus Health Services is a patient-centric healthcare platform committed to making quality medical
                 services simpler, faster, and more affordable across Central India.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                
+
                 <a
                   href="https://wa.me/7004754899"
                   target="_blank"
@@ -691,7 +691,7 @@ export default function Home() {
               What We Offer
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#A92881] mb-4 text-balance">
-            Complete Healthcare Under One Roof
+              Complete Healthcare Under One Roof
             </h2>
             <p className="text-base sm:text-lg text-foreground/70 mb-4 max-w-2xl mx-auto">
               Comprehensive healthcare services designed to meet all your medical needs
@@ -706,13 +706,13 @@ export default function Home() {
                 className="group flex flex-col items-center justify-center p-4 sm:p-6 transition-colors duration-300 cursor-pointer"
               >
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 mb-3">
-                    <Image
-                      src={category.icon}
-                      alt={category.title}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
+                  <Image
+                    src={category.icon}
+                    alt={category.title}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <h3 className="text-xs sm:text-sm font-semibold text-[#393185] text-center leading-tight group-hover:text-[#7AB735] transition-colors duration-300">
                   {category.title}
                 </h3>
@@ -735,7 +735,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#A92881]/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#393185]/5 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#7AB735]/5 rounded-full blur-3xl"></div>
-        
+
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header Section */}
           <div className="text-center mb-12 lg:mb-16">
@@ -770,27 +770,27 @@ export default function Home() {
               <div className="text-sm sm:text-base text-foreground/70 font-medium">Lives Impacted</div>
             </div>
           </div>
-          
+
           {/* Description Card */}
           <div className="max-w-5xl mx-auto mb-12 lg:mb-16">
             <div className="bg-linear-to-br from-white to-white/95 backdrop-blur-sm rounded-3xl p-8 lg:p-12 shadow-2xl border border-[#393185]/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#393185]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#7AB735]/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
               <div className="relative z-10 space-y-6">
-              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   With over <span className="font-bold text-[#393185]">10+ years of diagnostic excellence</span>, <span className="font-bold text-[#7AB735]">5,000+ health camps</span> conducted, <span className="font-bold text-[#A92881]">lakhs of lives</span> positively
                   impacted, and <span className="font-bold text-[#393185]">50+ healthcare awards</span>, Diagnoplus has built lasting trust through clinical
-                accuracy, ethical practices, and patient-first care.
-              </p>
-              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+                  accuracy, ethical practices, and patient-first care.
+                </p>
+                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   Built on this proven legacy, the <span className="font-bold text-[#393185]">Diagnoplus HealthEasy Plans</span> has been thoughtfully designed to make
-                healthcare more accessible, affordable, and stress-free for families. The plan brings together diagnostics,
-                doctor consultations, hospital coordination, and wellness support under one trusted platform.
-              </p>
-              <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
+                  healthcare more accessible, affordable, and stress-free for families. The plan brings together diagnostics,
+                  doctor consultations, hospital coordination, and wellness support under one trusted platform.
+                </p>
+                <p className="text-base sm:text-lg lg:text-xl text-foreground/80 leading-relaxed">
                   This health plan reflects our long-standing commitment to reliable care, transparent practices, and
-                long-term patient well-being—ensuring continuous support and peace of mind for every member.
-              </p>
+                  long-term patient well-being—ensuring continuous support and peace of mind for every member.
+                </p>
               </div>
             </div>
           </div>
@@ -804,24 +804,24 @@ export default function Home() {
               {healthEasyHighlights.map((highlight, idx) => {
                 const IconComponent = highlight.icon
                 return (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="group relative bg-white/95 backdrop-blur-sm p-6 lg:p-7 rounded-2xl border-2 border-[#393185]/10 hover:border-[#7AB735] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
                   >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#7AB735]/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-[#7AB735]/10 transition-all duration-300"></div>
                     <div className="relative flex items-start gap-4">
-                        <div className={`shrink-0 w-12 h-12 rounded-xl bg-linear-to-br ${highlight.color} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl relative overflow-hidden`}>
-                        <IconComponent 
-                          className="w-6 h-6 text-white opacity-70 group-hover:opacity-100 transition-all duration-300 relative z-10" 
-                          style={{ 
+                      <div className={`shrink-0 w-12 h-12 rounded-xl bg-linear-to-br ${highlight.color} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl relative overflow-hidden`}>
+                        <IconComponent
+                          className="w-6 h-6 text-white opacity-70 group-hover:opacity-100 transition-all duration-300 relative z-10"
+                          style={{
                             fill: 'rgba(255, 255, 255, 0.4)',
-                          }} 
+                          }}
                         />
-                        <IconComponent 
-                          className="w-6 h-6 text-white absolute opacity-0 group-hover:opacity-100 transition-all duration-300 z-20" 
-                          style={{ 
+                        <IconComponent
+                          className="w-6 h-6 text-white absolute opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+                          style={{
                             fill: 'white'
-                          }} 
+                          }}
                         />
                       </div>
                       <span className="text-foreground/80 text-sm lg:text-base leading-relaxed font-medium pt-1 flex-1">{highlight.text}</span>
@@ -844,7 +844,7 @@ export default function Home() {
               </div>
               <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-              
+
               <div className="relative z-10">
                 <div className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold mb-4">
                   Proven Results
@@ -852,12 +852,12 @@ export default function Home() {
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 lg:mb-6">
                   Average Savings of ₹60,000 - ₹80,000
                 </h3>
-              <p className="text-base sm:text-lg lg:text-xl opacity-95 mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl opacity-95 mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
                   Per family annually, while also ensuring peace of mind, reduced administrative burden, and significant time savings through a streamlined, patient-centric healthcare experience.
-              </p>
+                </p>
                 <Button className="bg-white text-[#393185] hover:bg-white/90 font-bold py-6 px-8 lg:px-12 text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                Learn More About HealthEasy Plans
-              </Button>
+                  Learn More About HealthEasy Plans
+                </Button>
               </div>
             </div>
           </div>
@@ -908,7 +908,7 @@ export default function Home() {
           <div className="bg-linear-to-br from-[#393185] via-[#393185] to-[#7AB735] text-white p-8 lg:p-12 rounded-2xl text-center shadow-2xl border border-[#393185]/20 transform hover:scale-[1.01] transition-all duration-300">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 lg:mb-6">A Strong Patient Base from Day One</h3>
             <p className="text-base sm:text-lg lg:text-xl opacity-95 mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
-              Diagnoplus brings over 1 million active patients across Chhattisgarh, Madhya Pradesh, and the entire
+              Diagnoplus brings over 7 million active patients across Chhattisgarh, Madhya Pradesh, and the entire
               Vidarbha region. Our partners benefit from immediate access to a trusted, established, and continuously
               growing patient network—ensuring faster growth and sustained demand.
             </p>
@@ -967,9 +967,8 @@ export default function Home() {
               ].map((logo, idx, arr) => (
                 <div
                   key={logo.name}
-                  className={`flex items-center justify-center px-3 sm:px-4 ${
-                    idx !== 0 ? "sm:border-l sm:border-border/60" : ""
-                  }`}
+                  className={`flex items-center justify-center px-3 sm:px-4 ${idx !== 0 ? "sm:border-l sm:border-border/60" : ""
+                    }`}
                 >
                   <div className="relative h-16 sm:h-20 lg:h-24 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300">
                     <Image

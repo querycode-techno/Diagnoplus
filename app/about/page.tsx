@@ -9,11 +9,11 @@ import { Stethoscope, Building2, TestTube, Users, Heart, Activity, Award, Trendi
 import Link from "next/link"
 import Image from "next/image"
 
-function ScrollableContainer({ 
-  children, 
+function ScrollableContainer({
+  children,
   onScrollRef,
-  onActiveIndexChange 
-}: { 
+  onActiveIndexChange
+}: {
   children: React.ReactNode
   onScrollRef?: (scrollLeft: () => void, scrollRight: () => void, scrollToIndex: (index: number) => void) => void
   onActiveIndexChange?: (index: number) => void
@@ -63,21 +63,21 @@ function ScrollableContainer({
     if (!scrollRef.current) return
     const container = scrollRef.current
     const cards = container.querySelectorAll('div[data-card-index]')
-    
+
     let closestIndex = 0
     let closestDistance = Infinity
-    
+
     cards.forEach((card, index) => {
       const rect = card.getBoundingClientRect()
       const containerRect = container.getBoundingClientRect()
       const distance = Math.abs(rect.left - containerRect.left)
-      
+
       if (distance < closestDistance) {
         closestDistance = distance
         closestIndex = index
       }
     })
-    
+
     setActiveIndex(closestIndex)
   }
 
@@ -85,7 +85,7 @@ function ScrollableContainer({
     if (!scrollRef.current) return
     // Only start dragging on left mouse button
     if (e.button !== 0) return
-    
+
     setIsDragging(true)
     const rect = scrollRef.current.getBoundingClientRect()
     setStartX(e.clientX - rect.left)
@@ -147,7 +147,7 @@ function ImageModal({ image, isOpen, onClose }: { image: string | null; isOpen: 
   if (!isOpen || !image) return null
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
       onClick={onClose}
     >
@@ -199,7 +199,7 @@ function Gallery({ images }: { images: string[] }) {
 }
 
 function VisionMissionCarousel() {
-  const scrollFunctionsRef = useRef<{ 
+  const scrollFunctionsRef = useRef<{
     scrollLeft: () => void
     scrollRight: () => void
     scrollToIndex: (index: number) => void
@@ -322,11 +322,10 @@ function VisionMissionCarousel() {
               <button
                 key={index}
                 onClick={() => scrollFunctionsRef.current?.scrollToIndex(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  activeIndex === index
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIndex === index
                     ? 'bg-[#7AB735] w-6'
                     : 'bg-[#393185]/30 hover:bg-[#393185]/50'
-                }`}
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -339,11 +338,10 @@ function VisionMissionCarousel() {
             <button
               key={index}
               onClick={() => scrollFunctionsRef.current?.scrollToIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                activeIndex === index
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${activeIndex === index
                   ? 'bg-[#7AB735] w-8'
                   : 'bg-[#393185]/30 hover:bg-[#393185]/50'
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -448,56 +446,57 @@ export default function AboutPage() {
 
 
       {/* We Are Diagnoplus Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#A92881] mb-6 leading-tight">
-                WE ARE DIAGNOPLUS<br />AN END-TO-END<br />DIGITAL HEALTHCARE PLATFORM
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-[#393185]/5 to-white relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute top-1/4 left-0 w-72 h-72 bg-[#7AB735]/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-[#A92881]/10 rounded-full blur-3xl"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+            {/* Title - Left Side */}
+            <div className="flex-1 text-center lg:text-right order-2 lg:order-1">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+                <span className="text-[#A92881]">WE ARE</span>
+                <br />
+                <span className="text-[#393185]">DIAGNOPLUS</span>
               </h2>
-              <p className="text-lg text-foreground/70 leading-relaxed mb-4">
-                Diagnoplus Health Services is a{" "}
-                <span className="font-semibold text-[#A92881]">patient-centric digital healthcare platform</span>{" "}
-                committed to making quality medical services{" "}
-                <span className="font-semibold text-[#393185]">simpler, faster, and more affordable</span> across{" "}
-                <span className="font-semibold text-[#A92881]">Central India</span>. By combining technology with a{" "}
-                <span className="font-semibold text-[#393185]">trusted healthcare network</span>, we provide{" "}
-                <span className="font-semibold text-[#A92881]">end-to-end support</span> for patients and families.
-              </p>
-              <p className="text-lg text-foreground/70 leading-relaxed">
-                Our comprehensive services include{" "}
-                <span className="font-semibold text-[#393185]">
-                  diagnostic laboratories, pathology tests, advanced scans, doctor consultations, OPD &amp; IPD coordination,
-                  planned surgeries, ambulance services, home healthcare support, patient assistance services,
-                </span>{" "}
-                and{" "}
-                <span className="font-semibold text-[#A92881]">secure digital storage of lifelong health records</span>.
-                We focus on{" "}
-                <span className="font-semibold text-[#393185]">reducing healthcare complexity and costs</span> while maintaining{" "}
-                <span className="font-semibold text-[#A92881]">high standards of care</span>, ensuring{" "}
-                <span className="font-semibold text-[#393185]">reliable and timely medical support</span> for all sections of society.
-              </p>
+              <div className="mt-4 w-24 h-1.5 bg-gradient-to-r from-[#393185] to-[#7AB735] rounded-full mx-auto lg:ml-auto lg:mr-0"></div>
             </div>
-            <div className="relative">
-              {/* Floating Mobile Phone Effect */}
-              <div className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center">
-                <div 
-                  className="relative w-64 h-[500px] md:w-80 md:h-[600px] lg:w-96 lg:h-[700px]"
+
+            {/* Floating Mobile Phone - Center */}
+            <div className="relative order-1 lg:order-2">
+              <div className="relative h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center">
+                {/* Glow Effect Behind Phone */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-[#393185]/30 to-[#7AB735]/30 rounded-full blur-3xl"></div>
+                </div>
+                <div
+                  className="relative w-52 h-[380px] md:w-64 md:h-[480px] lg:w-72 lg:h-[540px]"
                   style={{
                     animation: 'float 3s ease-in-out infinite'
                   }}
                 >
-                  <div className="relative w-full h-full">
-                    <Image
-                      src="/about/mobile.png"
-                      alt="Mobile app interface"
-                      fill
-                      className="object-contain drop-shadow-2xl"
-                      priority
-                    />
-                  </div>
+                  <Image
+                    src="/about/mobile.png"
+                    alt="Diagnoplus Mobile App"
+                    fill
+                    className="object-contain drop-shadow-2xl"
+                    priority
+                  />
                 </div>
               </div>
+            </div>
+
+            {/* Subtitle - Right Side */}
+            <div className="flex-1 text-center lg:text-left order-3">
+              <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
+                <span className="text-[#393185]">AN END-TO-END</span>
+                <br />
+                <span className="text-[#A92881]">DIGITAL HEALTHCARE</span>
+                <br />
+                <span className="text-[#7AB735]">PLATFORM</span>
+              </h3>
+              <div className="mt-4 w-24 h-1.5 bg-gradient-to-r from-[#7AB735] to-[#A92881] rounded-full mx-auto lg:mr-auto lg:ml-0"></div>
             </div>
           </div>
         </div>
@@ -554,7 +553,7 @@ export default function AboutPage() {
 
             {/* Right Side - Text Content */}
             <div>
-            <p className="text-lg text-foreground/70 leading-relaxed mb-4">
+              <p className="text-lg text-foreground/70 leading-relaxed mb-4">
                 Diagnoplus Health Services is a{" "}
                 <span className="font-semibold text-[#A92881]">patient-centric digital healthcare platform</span>{" "}
                 committed to making quality medical services{" "}
@@ -630,10 +629,10 @@ export default function AboutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Users, title: "Lives Served", count: "70,00,000+",  },
-              { icon: TestTube, title: "Lab Tests", count: "30,00,000+",  },
-              { icon: Activity, title: "Other Health Services Delivered", count: "2,00,000+",  },
-              { icon: Heart, title: "Monthly Reach", count: "10,00,000+",  },
+              { icon: Users, title: "Lives Served", count: "70,00,000+", },
+              { icon: TestTube, title: "Lab Tests", count: "30,00,000+", },
+              { icon: Activity, title: "Other Health Services Delivered", count: "2,00,000+", },
+              { icon: Heart, title: "Monthly Reach", count: "10,00,000+", },
             ].map((impact, idx) => {
               const IconComponent = impact.icon
               return (
